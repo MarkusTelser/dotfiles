@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/carlos/.vim/plugged/purify/gnome-terminal'
+let g:netrw_dirhist_6='/home/carlos/.vim/plugged/purify/vim'
+let g:netrw_dirhist_5='/home/carlos/.vim/autoload/vim-plug/test'
+let g:netrw_dirhist_4='/home/carlos/Code/myvim'
