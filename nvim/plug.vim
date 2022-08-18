@@ -6,15 +6,15 @@ endif
 call plug#begin()
   
 	" themes
-  Plug 'tomasr/molokai'
+	Plug 'tomasr/molokai'
 	Plug 'bluz71/vim-moonfly-colors'
 	Plug 'kyoz/purify', { 'rtp': 'vim'} 
 	Plug 'bignimbus/pop-punk.vim'
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'NLKNguyen/papercolor-theme'
 	Plug 'dracula/vim', { 'as': 'dracula' }
-  Plug 'morhetz/gruvbox'
-  Plug 'rakr/vim-one'
+  	Plug 'morhetz/gruvbox'
+  	Plug 'rakr/vim-one'
 	
 	" status and tab line
 	Plug 'vim-airline/vim-airline'
@@ -35,12 +35,12 @@ call plug#begin()
 	
 	" file explorer
 	Plug 'preservim/nerdtree'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-  Plug 'ryanoasis/vim-devicons'
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'ryanoasis/vim-devicons'
 	"Plug 'kyazdani42/nvim-web-devicons'
 
 	" language-server autocompletion support
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" coc-pyright, coc-prettier, coc-pairs, coc-json, coc-java
 
 	" extras installed
