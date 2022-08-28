@@ -1,3 +1,4 @@
+
 # enable only in interactive shell
 [[ $- != *i* ]] && return
 
@@ -67,7 +68,14 @@ shopt -s histappend
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
+fi
+
+# Bash prompt customization.
+# The additional configuration of the prompt are put
+# into a separate file like ~/.bash_prompt
+if [ -f ~/.bash_prompt ]; then
+    source ~/.bash_prompt
 fi
 
 # add auto completion
@@ -75,20 +83,6 @@ if [ -r /usr/share/bash-completion/bash_completion ]; then
 	. /usr/share/bash-completion/bash_completion
 fi
 
-# define custom aliases
-alias cp="cp -i"
-alias df='df -h'
-alias free='free -m'
-alias np='nano -w PKGBUILD'
-alias more=less
-alias ll="ls -l"
-alias v="vim"
-alias n="nvim"
-alias sd="shutdown now"
-alias re="reboot now"
-alias pdir="cd ~/Code/Python"
-alias edir="cd ~/Code/ESP32"
-alias mdir="cd /run/media/carlos/FILME/Filme"
 
 
 # colors - debug tool to print out term-colors
@@ -142,60 +136,7 @@ ex ()
   fi
 }
 
-## Colors?  Used for the prompt.
-#Regular text color
-BLACK='\[\e[0;30m\]'
-#Bold text color
-BBLACK='\[\e[1;30m\]'
-#background color
-BGBLACK='\[\e[40m\]'
-RED='\[\e[0;31m\]'
-BRED='\[\e[1;31m\]'
-BGRED='\[\e[41m\]'
-GREEN='\[\e[0;32m\]'
-BGREEN='\[\e[1;32m\]'
-BGGREEN='\[\e[1;32m\]'
-YELLOW='\[\e[0;33m\]'
-BYELLOW='\[\e[1;33m\]'
-BGYELLOW='\[\e[1;33m\]'
-BLUE='\[\e[0;34m\]'
-BBLUE='\[\e[1;34m\]'
-BGBLUE='\[\e[1;34m\]'
-MAGENTA='\[\e[0;35m\]'
-BMAGENTA='\[\e[1;35m\]'
-BGMAGENTA='\[\e[1;35m\]'
-CYAN='\[\e[0;36m\]'
-BCYAN='\[\e[1;36m\]'
-BGCYAN='\[\e[1;36m\]'
-WHITE='\[\e[0;37m\]'
-BWHITE='\[\e[1;37m\]'
-BGWHITE='\[\e[1;37m\]'
-
-PROMPT_COMMAND=smile_prompt
-
-function smile_prompt
-{
-	if [ "$?" -eq "0" ]
-	then
-	#smiley
-	SC="${GREEN}→"
-	else
-	#frowney
-	SC="${RED}→"
-	fi
-	if [ $UID -eq 0 ]
-	then
-	#root user color
-	UC="${BRED}"
-	else
-	#normal user color
-	UC="${BMAGENTA}"
-	fi
-	#hostname color
-	HC="${BYELLOW}"
-	#regular color
-	RC="${BBLUE}"
-	#default color
-	DF='\[\e[0m\]'
-	PS1="${DF}\D{%H:%M:%S}${DF} | ${UC}\u${DF} | ${RC}\W${DF} ${SC}${DF} "
-}
+# auto-start commands only in graphical interface
+if [ "$TERM" != "linux" ]; then
+	neofetch 
+fi

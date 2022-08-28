@@ -1,0 +1,25 @@
+
+# CONSOLIDATES BASH CONFIG INTO ONE FILE !
+
+# .bash_profile is executed for login shells, while .bashrc 
+# is executed for interactive non-login shells. When you login 
+# via console at the machine or remotely via ssh: .bash_profile
+# is executed to configure your shell before the initial command 
+# prompt. But, if you’ve already logged into your machine and open
+# a new terminal window (xterm) then .bashrc is executed before 
+# the window command prompt.
+
+
+cat << "EOF"
+.====/ ==...==============__====================____=============# ====== =========__========================= \\
+||                      [  |                 .' __ \                             [  |      (_)                 ||     ("`-''-/").___..--''"`-._     
+||  .---.  ,--.   _ .--. | |  .--.   .--.   / .'  \ |  _ .--..--.   ,--.   .---.  | |--.   __   _ .--.  .---.  ||      `6_ 6  )   `-.  (     ).`-.__.`)
+|| / /'`\]`'_\ : [ `/'`\]| |/ .'`\ \( (`\]  | | (_/ | [ `.-. .-. | `'_\ : / /'`\] | .-. | [  | [ `.-. |/ /__\\ ||      (_Y_.)'  ._   )  `._ `. ``-..-' 
+|| | \__. // | |, | |    | || \__. | `'.'.  \ `.__.'\  | | | | | | // | |,| \__.  | | | |  | |  | | | || \__., ||          _..`--'_..-_/  /--'_.'        
+|| '.___.'\'-;__/[___]  [___]'.__.' [\__) )  `.___ .' [___||__||__]\'-;__/'.___.'[___]|__][___][___||__]'.__.' ||  ./:.   ((((.-''  ((((.'  (((.-'        
+.===_____________________/===============================--_---======-----------------------====================.      
+EOF
+
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi

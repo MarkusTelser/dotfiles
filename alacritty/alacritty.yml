@@ -29,31 +29,54 @@ scrolling:
   # Scrolling distance multiplier.
   multiplier: 4
 
-
-# sudo pacman -S ttf-iosevka-nerd
-# Font configuration
 font:
   normal:
-    family: Iosevka  
-    style: Regular 
+    family: Source Code Pro Semibold 
+    style: Regular
 
   bold:
-    family: Iosevka Nerd Font Mono
-    style: Bold 
+    family: Source Code Pro Semibold 
+    style: Semibold
 
   italic:
-    family: Iosevka Nerd Font Mono
+    family: Source Code Pro Semibold 
     style: Italic 
 
   bold_italic:
-    family: Iosevka Nerd Font Mono
-    style: Bold Italic 
+    family: Source Code Pro Semibold 
+    style: Semibold Italic 
 
   size: 14
 
   offset:
     x: 0
     y: 0
+
+font:
+  normal:
+    family: DejaVu Sans Mono 
+    style: Book
+
+  bold:
+    family: DejaVu Sans Mono 
+    style: Bold 
+
+  italic:
+    family: DejaVu Sans Mono 
+    style: Oblique 
+
+  bold_italic:
+    family: DejaVu Sans Mono 
+    style: Bold Oblique 
+
+  size: 13
+
+  offset:
+    x: 0
+    y: 0
+
+# sudo pacman -S ttf-iosevka-nerd
+# Font configuration
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }

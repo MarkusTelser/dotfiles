@@ -7,7 +7,7 @@ count_files=0
 
 function print(){
     if [ $# == 2 ]; then
-        case $2 in  
+        case $2 in
             0) icon="\u2713"; color="\u001b[32m";; # success
             1) icon="\u0021"; color="\u001b[33m";; # warning
             2) icon="\u0078"; color="\u001b[31m";; # error
@@ -42,12 +42,12 @@ function createSymLink(){
 }
 
 function update_sys {
-    if [ -x "$(command -v pacman)" ]; then 
-        sudo pacman -Syu
-    elif [ -x "$(command -v apt-get)" ]; then 
-        sudo apt-get update 
-        sudo apt-get dist-upgrade
-    else 
+    if [ -x "$(command -v pacman)" ]; then
+        sudo pacman -Syu 1> /dev/null
+    elif [ -x "$(command -v apt-get)" ]; then
+        sudo apt-get update 1> /dev/null
+        sudo apt-get dist-upgrade 1> /dev/null
+    else
         echo "No supported package manager!"
         exit
     fi
@@ -62,7 +62,7 @@ if (( "$#" != 1 )); then
 fi
 
 # require root priviledges for package installations/updates
-if [ "$EUID" -ne 0 ]; then 
+if [ "$EUID" -ne 0 ]; then
     echo "Please run script as root!"
     # exit
 fi
@@ -71,22 +71,33 @@ fi
 update_sys
 
 # install neovim and plugin manager
-if [ -x "$(command -v pacman)" ]; then 
+if [ -x "$(command -v pacman)" ]; then
     sudo pacman -S vim neovim git nodejs go
-elif [ -x "$(command -v apt-get)" ]; then 
+elif [ -x "$(command -v apt-get)" ]; then
     echo -e "\n\n\n\n"
     sudo apt-get -y install vim neovim git nodejs golang
 fi
-
 createSymLink "nvim" $HOME/.config/nvim
 createSymLink "vim/vimrc" $HOME/.vimrc
-createSymLink "bash/bashrc" $HOME/.bashrc
-
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-
 nvim +PluginInstall +qall
+
+# install terminal (termite)
+if [-x "$(command -v pacman)" ]; then
+	sudo pacman -S --needed git base-devel
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	yay -Syu termite
+elif [-x "$(command -v apt-get)" ]; then
+	# TODO: try afterwards
+fi
+createSymLink "termite/config" $HOME/.config/termite/config
+createSymLink "/usr/bin/termite" "/usr/bin/terminal"
+
+# install shell (bash, zsh)
+createSymLink "bash/bashrc" $HOME/.bashrc
 
 # inform user about count of backed-up files
 if [ $count_files != 0 ]; then

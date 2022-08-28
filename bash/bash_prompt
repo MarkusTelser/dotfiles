@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+if ttput setaf 1 &> /dev/null; then
+	tput sgr0
+	if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+		BLACK=$(tput setaf 235)
+		BBLACK=$(tput setaf 237)
+		BGBLACK=$(tput setab 237)
+		RED=$(tput setaf 196)
+		BRED=$(tput setaf 160)
+		BGRED=$(tput setab 160)
+		GREEN=$(tput setaf 28)
+		BGREEN=$(tput setaf 64)
+		BGGREEN=$(tput setab 64)
+		YELLOW=$(tput setaf 11)
+		BYELLOW=$(tput setaf 208)
+		BGYELLOW=$(tput setab 214)
+		BLUE=$(tput setaf 33)
+		BBLUE=$(tput setaf 27)
+		BGBLUE=$(tput setab 27)
+		WHITE=$(tput setaf 15)
+		BWHITE=$(tput setaf 253)
+		BGWHITE=$(tput setab 253)
+	fi
+else
+	BLACK='\[\e[0;30m\]'
+	BBLACK='\[\e[1;30m\]'
+	BGBLACK='\[\e[40m\]'
+	RED='\[\e[0;31m\]'
+	BRED='\[\e[1;31m\]'
+	BGRED='\[\e[41m\]'
+	GREEN='\[\e[0;32m\]'
+	BGREEN='\[\e[1;32m\]'
+	BGGREEN='\[\e[1;32m\]'
+	YELLOW='\[\e[0;33m\]'
+	BYELLOW='\[\e[1;33m\]'
+	BGYELLOW='\[\e[1;33m\]'
+	BLUE='\[\e[0;34m\]'
+	BBLUE='\[\e[1;34m\]'
+	BGBLUE='\[\e[1;34m\]'
+	WHITE='\[\e[0;37m\]'
+	BWHITE='\[\e[1;37m\]'
+	BGWHITE='\[\e[1;37m\]'
+fi
+
+AC="${WHITE}" # @ symbol color
+UC="${YELLOW}" # username color
+HC="${BYELLOW}" # hostname color
+TC="${GREEN}" # current time color
+PC="${BLUE}" # directory path color
+
+RESET='\[\e[0m\]'
+
+PROMPT_COMMAND=bash_prompt
+
+function bash_prompt
+{
+
+  # change arrow indicator color depending on 
+	# the return value of the last executed command
+	if [ "$?" -eq "0" ]; then
+		ENDING="${GREEN}➯ "
+	else
+		ENDING="${RED}➯ "
+	fi
+	
+	# change bash command prompt theme depending on
+	# the currently logged-in user e.g. root
+	if [ $UID -eq 0 ]; then
+		UC="${BWHITE}"
+	fi
+	
+	# git 
+	if $( git rev-parse --is-inside-work-tree &> /dev/null ); then
+		local STATE="${GREEN}"
+		local BRANCH="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+										git rev-parse --short HEAD 2> /dev/null || \
+                    printf "(unknown)")"
+		
+	  # check for unstaged changes
+		if ! $(git diff --quiet --ignore-submodules --cached); then
+      STATE="${RED}"  # Unstaged changes (not yet added)
+    fi
+    
+		# check for untracked files
+    if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+      STATE="${RED}"  # New files (not yet added)
+    fi
+    
+		# check for uncommitted changes in the index
+    if ! git diff-files --quiet --ignore-submodules --; then
+      STATE="${YELLOW}"  # Changes detected (not yet committed)
+    fi
+		
+		local GITBRANCH="(${BRANCH}${STATE}${RESET})"
+	fi
+
+
+	PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${TC}\T${RESET} ${PC}\W${RESET}${GITBRANCH} ${ENDING}${RESET}"
+	# PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${PC}\W${RESET} ${GITBRANCH} ${ENDING}${RESET}" # no current time
+	# PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${PC}\W${RESET} ${ENDING}${RESET}" # no current time + no git 
+}
