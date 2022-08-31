@@ -203,10 +203,11 @@ live_config_reload: true
 
 # Shell Program to the path of your favorite shell
 shell:
-  #  program: /usr/bin/zsh
   program: /usr/bin/bash
-  # args:
-  #  - --command=tmux
+  # program: /usr/bin/zsh
+  args:
+    - -c
+    - "/usr/bin/tmux"
 
 # Key Bindings
 key_bindings:
