@@ -203,8 +203,8 @@ live_config_reload: true
 
 # Shell Program to the path of your favorite shell
 shell:
-  program: /usr/bin/bash
-  # program: /usr/bin/zsh
+  # program: /usr/bin/bash
+  program: /usr/bin/zsh
   args:
     - -c
     - "/usr/bin/tmux"

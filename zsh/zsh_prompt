@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+# Initialize colors.
+autoload -U colors 
+colors
+
+BLACK="%F{235}"
+BBLACK="%B%F{237}"
+BGBLACK="%K{237}"
+RED="%F{196}"
+BRED="%B%F{160}"
+BGRED="%K{160}"
+GREEN="%F{28}"
+BGREEN="%B%F{64}"
+BGGREEN="%K{64}"
+YELLOW="%F{11}"
+BYELLOW="%B%F{208}"
+BGYELLOW="%K{214}"
+BLUE="%F{33}"
+BBLUE="%B%F{27}"
+BGBLUE="%K{27}"
+WHITE="%F{15}"
+BWHITE="%B%F{253}"
+BGWHITE="%K{253}"
+
+RESET="%b%u%s%f"
+
+AC="${WHITE}" # @ symbol color
+UC="${YELLOW}" # username color
+HC="${BYELLOW}" # hostname color
+TC="${GREEN}" # current time color
+PC="${BLUE}" # directory path color
+
+# change arrow indicator color depending on 
+# the return value of the last executed command
+#FAIL_STATUS="${RED}➯ %f"
+#SUCC_STATUS="${GREEN}➯ %f"
+#FAIL_STATUS="${RED}🠲 %f"
+#SUCC_STATUS="${GREEN}🠲 %f"
+FAIL_STATUS="${RED}🠞 %f"
+SUCC_STATUS="${GREEN}🠞 %f"
+
+STATUS_CODE="%(?.$SUCC_STATUS.$FAIL_STATUS)"
+
+# change bash command prompt theme depending on
+# the currently logged-in user e.g. root
+if [ $UID -eq 0 ]; then
+	UC="${BRED}["	
+	PC="${BWHITE}" # change path color (dimmer look) 
+	RC="${BRED}]${RESET}"
+fi
+USER_NAME="${UC}%n${RESET}"	
+
+# add background-color for zsh-like appearance
+BG_COLOR="238"
+INIT_PROMPT="%K{$BG_COLOR}"
+FINISH_PROMPT="%k%F{$BG_COLOR}%f"
+
+function git_status(){
+	if $( git rev-parse --is-inside-work-tree &> /dev/null ); then
+		local STATE="${GREEN}"
+		local BRANCH="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+			git rev-parse --short HEAD 2> /dev/null || \
+			printf "(unknown)")"
+
+		# check for unstaged changes
+		if ! $(git diff --quiet --ignore-submodules --cached); then
+			STATE="${RED}"  # Unstaged changes (not yet added)
+		fi
+
+		# check for untracked files
+		if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+			STATE="${RED}"  # New files (not yet added)
+		fi
+
+		# check for uncommitted changes in the index
+		if ! git diff-files --quiet --ignore-submodules --; then
+			STATE="${YELLOW}"  # Changes detected (not yet committed)
+		fi
+
+		echo " (${BRANCH}${STATE}${RESET})"
+	fi
+}
+
+# zsh-looking prompt
+PROMPT='${INIT_PROMPT}${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%c${RESET}$(git_status)${RC} $STATUS_CODE${FINISH_PROMPT} '
+# PROMPT='${INIT_PROMPT}${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%~${RESET}$(git_status)${RC} $STATUS_CODE${FINISH_PROMPT} ' # relative path
+# PROMPT='${INIT_PROMPT}${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%~${RESET}${RC} $STATUS_CODE${FINISH_PROMPT} ' # relative path + no git support
+# PROMPT='${INIT_PROMPT}${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%c${RESET}${RC} $STATUS_CODE${FINISH_PROMPT} ' # no git support
+
+# bash-looking prompt
+# PROMPT='${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%c${RESET}$(git_status)${RC} $STATUS_CODE'
+# PROMPT='${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%~${RESET}$(git_status)${RC} $STATUS_CODE' # relative path
+# PROMPT='${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%~${RESET}${RC} $STATUS_CODE' # relative path + no git support
+# PROMPT='${USER_NAME}${AC}@${RESET}${HC}%m${RESET} ${PC}%c${RESET}${RC} $STATUS_CODE' # no git support

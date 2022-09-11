@@ -1,14 +1,45 @@
 # Use powerline
 USE_POWERLINE="true"
 
-# Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  # source /usr/share/zsh/manjaro-zsh-config
-fi
-# Use manjaro zsh prompt
-if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-  # source /usr/share/zsh/manjaro-zsh-prompt
-fi
+## Options section
+setopt correct # Auto correct mistakes
+setopt numericglobsort # Sort filenames numerically when it makes sense
+setopt appendhistory # Immediately append history instead of overwriting
+setopt histignorealldups # If a new command is a duplicate, remove the older one
+setopt autocd # if only directory path is entered, cd there.
+setopt inc_append_history # save commands are added to the history immediately, otherwise only when shell exits.
+setopt PROMPT_SUBST # enable func in prompt 
+
+# load module for locale information
+zmodload zsh/langinfo
+
+# zsh calculator for most ordinary arithmetic expressions
+autoload zcalc
+
+# load auto complete
+autoload -U compinit; compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots) # include hidden files
+
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive tab completion
+zstyle ':completion:*' rehash true # automatically find new executables in path 
+
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# vi mode
+bindkey -v
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -17,6 +48,51 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
-autoload -U compinit; compinit
+# load PLUGINS
+for file in ~/.config/zsh/plugins/*; do
+	source "$file"
+done
+
+# load extra fish-like autosuggestions 
+if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+# load custom zsh prompt
+if [ -f ~/.config/zsh/zsh_prompt ]; then
+	source ~/.config/zsh/zsh_prompt
+fi
+
+## Keybindings section
+bindkey '^A' beginning-of-line # Home key
+bindkey '^[[7~' beginning-of-line # Home key
+bindkey '^[[H' beginning-of-line # Home key
+bindkey '^E' end-of-line # End key
+bindkey '^[[8~' end-of-line # End key
+bindkey '^[[F' end-of-line # End key
+bindkey '^[[2~' overwrite-mode # Insert key
+bindkey '^[[3~' delete-char # Delete key
+bindkey '^[[C'  forward-char # Right key
+bindkey '^[[D'  backward-char # Left key
+bindkey '^[[5~' history-beginning-search-backward # Page up key
+bindkey '^[[6~' history-beginning-search-forward # Page down key
+if [[ "${terminfo[khome]}" != "" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line # [Home] - Go to beginning of line
+fi
+if [[ "${terminfo[kend]}" != "" ]]; then
+  bindkey "${terminfo[kend]}" end-of-line # [End] - Go to end of line
+fi
+
+# Navigate words with ctrl+arrow keys
+bindkey '^[Oc' forward-word
+bindkey '^[Od' backward-word
+bindkey '^[[1;5D' backward-word 
+bindkey '^[[1;5C' forward-word 
+bindkey '^H' backward-kill-word # delete previous word with ctrl+backspace
+bindkey '^[[3;5~' kill-word # delete next word with ctrl+del 
+bindkey '^[[Z' undo # Shift+tab undo last action
+
+# add alt+period shortcut for last parameter
+bindkey '^[.' insert-last-word 
 
 neofetch
