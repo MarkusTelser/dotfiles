@@ -47,9 +47,9 @@ shopt -s histappend
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
+# ~/.config/aliasrc, instead of adding them here directly.
+if [ -f ~/.config/aliasrc ]; then
+    source ~/.config/aliasrc
 fi
 
 # Bash prompt customization.
