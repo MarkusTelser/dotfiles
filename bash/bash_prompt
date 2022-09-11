@@ -55,7 +55,6 @@ PROMPT_COMMAND=bash_prompt
 
 function bash_prompt
 {
-
   # change arrow indicator color depending on 
 	# the return value of the last executed command
 	if [ "$?" -eq "0" ]; then
@@ -67,9 +66,11 @@ function bash_prompt
 	# change bash command prompt theme depending on
 	# the currently logged-in user e.g. root
 	if [ $UID -eq 0 ]; then
-		UC="${BWHITE}"
+		UC="${BRED}["
+		PC="${BWHITE}" # change path color (dimmer look) 
+		RC="${BRED}]${RESET}"
 	fi
-	
+
 	# git 
 	if $( git rev-parse --is-inside-work-tree &> /dev/null ); then
 		local STATE="${GREEN}"
@@ -95,8 +96,7 @@ function bash_prompt
 		local GITBRANCH="(${BRANCH}${STATE}${RESET})"
 	fi
 
-
-	PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${TC}\T${RESET} ${PC}\W${RESET}${GITBRANCH} ${ENDING}${RESET}"
+	PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${TC}\T${RESET} ${PC}\W${RESET}${GITBRANCH}${RC} ${ENDING}${RESET}"
 	# PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${PC}\W${RESET} ${GITBRANCH} ${ENDING}${RESET}" # no current time
 	# PS1="${UC}\u${RESET}${AC}@${RESET}${HC}\h${RESET} ${PC}\W${RESET} ${ENDING}${RESET}" # no current time + no git 
 }
