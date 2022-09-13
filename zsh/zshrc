@@ -95,4 +95,7 @@ bindkey '^[[Z' undo # Shift+tab undo last action
 # add alt+period shortcut for last parameter
 bindkey '^[.' insert-last-word 
 
+# add fzf to tmux sessionizer 
+bindkey -s ^f "fzf-tmux-sessionizer\n"
+
 neofetch

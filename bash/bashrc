@@ -64,7 +64,8 @@ if [ -r /usr/share/bash-completion/bash_completion ]; then
 	. /usr/share/bash-completion/bash_completion
 fi
 
-
+# add fzf to tmux sessionizer 
+bind '"\C-f":"fzf-tmux-sessionizer\n"'
 
 # colors - debug tool to print out term-colors
 colors() {

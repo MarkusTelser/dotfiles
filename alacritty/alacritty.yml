@@ -207,7 +207,7 @@ shell:
   program: /usr/bin/zsh
   args:
     - -c
-    - "/usr/bin/tmux"
+    - "/usr/bin/tmux attach &> /dev/null || zsh"
 
 # Key Bindings
 key_bindings:
