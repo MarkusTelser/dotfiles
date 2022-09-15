@@ -30,3 +30,5 @@ alias cdir="cd ~/Code"
 alias pdir="cd ~/Code/Python"
 alias edir="cd ~/Code/ESP32"
 alias mdir="cd /run/media/carlos/FILME/Filme"
+
+alias fz="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"

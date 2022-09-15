@@ -122,3 +122,7 @@ ex ()
 if [ "$TERM" != "linux" ]; then
 	neofetch 
 fi
+
+if [ -f ~/.fzf.bash ]; then
+	source ~/.fzf.bash
+fi
