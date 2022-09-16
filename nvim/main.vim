@@ -92,9 +92,9 @@ set t_Co=256
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-colorscheme gruvbox
+colorscheme sonokai
 
 " make background + side column transparent
-hi Normal guibg=NONE ctermbg=NONE
-hi clear LineNr
-hi clear SignColumn
+" hi Normal guibg=NONE ctermbg=NONE
+" hi clear LineNr
+" hi clear SignColumn

@@ -4,7 +4,7 @@ endif
 
 " plugin manager
 call plug#begin()
-  
+
 	" themes
 	Plug 'tomasr/molokai'
 	Plug 'bluz71/vim-moonfly-colors'
@@ -13,10 +13,15 @@ call plug#begin()
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'NLKNguyen/papercolor-theme'
 	Plug 'dracula/vim', { 'as': 'dracula' }
-  	Plug 'morhetz/gruvbox'
-  	Plug 'rakr/vim-one'
-	
+	Plug 'morhetz/gruvbox'
+	Plug 'rakr/vim-one'
+	Plug 'sainnhe/sonokai'
+
+	" proper transpranency
+	Plug 'xiyaowong/nvim-transparent'
+
 	" status and tab line
+	Plug 'edkolev/tmuxline.vim'
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'lambdalisue/battery.vim'
@@ -32,7 +37,7 @@ call plug#begin()
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-rhubarb'
 	Plug 'junegunn/gv.vim'
-	
+
 	" file explorer
 	Plug 'preservim/nerdtree'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
