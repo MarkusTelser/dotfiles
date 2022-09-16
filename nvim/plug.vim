@@ -16,15 +16,19 @@ call plug#begin()
 	Plug 'morhetz/gruvbox'
 	Plug 'rakr/vim-one'
 	Plug 'sainnhe/sonokai'
+	Plug 'sainnhe/edge'
+	Plug 'sainnhe/gruvbox-material'
+	Plug 'wuelnerdotexe/vim-enfocado'
+	Plug 'eemed/sitruuna.vim'
 
 	" proper transpranency
 	Plug 'xiyaowong/nvim-transparent'
 
 	" status and tab line
-	Plug 'edkolev/tmuxline.vim'
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'lambdalisue/battery.vim'
+	" Plug 'edkolev/tmuxline.vim'
 
 	" fuzzy file finder
 	Plug 'nvim-lua/popup.nvim'

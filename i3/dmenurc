@@ -13,7 +13,7 @@ DMENU_NB="#222D31"
 DMENU_NB="#282828"
 
 ## textcolour for unselected menu-items
-DMENU_NF="#FABD27"
+DMENU_NF="#BDAE93"
 
 ## background colour for selected menu-items
 DMENU_SB="#B8BB26"
