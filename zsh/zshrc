@@ -98,8 +98,15 @@ bindkey '^[.' insert-last-word
 # add fzf to tmux sessionizer 
 bindkey -s ^f "fzf-tmux-sessionizer\n"
 
-neofetch
-
+# load in fzf key bindings, auto-completion 
 if [ -f ~/.fzf.zsh ]; then 
 	source ~/.fzf.zsh
+fi
+
+# auto-start commands only in graphical interface
+if [ "$TERM" != "linux" ]; then
+	# print out system info if first alacritty terminal
+	if [[ $(pgrep -c alacritty) -eq 1 ]]; then
+		neofetch
+	fi
 fi
