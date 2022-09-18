@@ -49,11 +49,19 @@ call plug#begin()
 	"Plug 'kyazdani42/nvim-web-devicons'
 
 	" language-server autocompletion support
+	Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-buffer'
+	Plug 'hrsh7th/cmp-path'
+	Plug 'hrsh7th/cmp-cmdline'
+	Plug 'ray-x/lsp_signature.nvim'
+	Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'neovim/nvim-lspconfig'
 	" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" coc-pyright, coc-prettier, coc-pairs, coc-json, coc-java
 
 	" extras installed
 	Plug 'junegunn/goyo.vim'
+	Plug 'tpope/vim-commentary'
 	Plug 'dstein64/vim-startuptime'
 	Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 	Plug 'gabrielelana/vim-markdown'
