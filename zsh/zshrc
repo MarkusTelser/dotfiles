@@ -25,8 +25,7 @@ _comp_options+=(globdots) # include hidden files
 
 # Speed up completions
 zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' use-cache on zstyle ':completion:*' cache-path ~/.zsh/cache
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive tab completion
 zstyle ':completion:*' rehash true # automatically find new executables in path 
@@ -49,9 +48,11 @@ if [ -f ~/.config/aliasrc ]; then
 fi
 
 # load PLUGINS
-for file in ~/.config/zsh/plugins/*; do
-	source "$file"
-done
+if [ -h ~/.config/zsh/.plugins ]; then
+	for file in ~/.config/zsh/.plugins/*; do
+		source "$file"
+	done
+fi
 
 # load extra fish-like autosuggestions 
 if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -59,8 +60,8 @@ if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 # load custom zsh prompt
-if [ -f ~/.config/zsh/zsh_prompt ]; then
-	source ~/.config/zsh/zsh_prompt
+if [ -f ~/.config/zsh/.zsh_prompt ]; then
+	source ~/.config/zsh/.zsh_prompt
 fi
 
 ## Keybindings section
@@ -96,7 +97,14 @@ bindkey '^[[Z' undo # Shift+tab undo last action
 bindkey '^[.' insert-last-word 
 
 # add fzf to tmux sessionizer 
-bindkey -s ^f "fzf-tmux-sessionizer\n"
+if [ -x "$(command -v fmux)" ]; then
+	bindkey -s ^f "fmux\n"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 # load in fzf key bindings, auto-completion 
 if [ -f ~/.fzf.zsh ]; then 
@@ -106,7 +114,9 @@ fi
 # auto-start commands only in graphical interface
 if [ "$TERM" != "linux" ]; then
 	# print out system info if first alacritty terminal
-	if [[ $(pgrep -c alacritty) -eq 1 ]]; then
+	# support x-terminal-emulator for most debian distors
+	if [[ $(pgrep -c alacritty) -eq 1 ]] \
+	|| [[ $(pgrep -c x-terminal-emul) -eq 1 ]]; then
 		neofetch
 	fi
 fi

@@ -59,8 +59,6 @@ function omz_urlencode() {
   local safe_encodings
   safe_encodings=(UTF-8 utf8 US-ASCII)
   if [[ -z ${safe_encodings[(r)$encoding]} ]]; then
-		echo "test"
-    echo $encoding
 		str=$(echo -E "$str" | iconv -f $encoding -t UTF-8)
     if [[ $? != 0 ]]; then
       echo "Error converting string from $encoding to UTF-8" >&2
@@ -137,8 +135,8 @@ function web_search() {
   if [[ $# -gt 1 ]]; then
     # build search url:
     # join arguments passed with '+', then append to search engine URL
-    echo ${urls[$1]}
-    echo ${@[2,-1]}
+    # echo ${urls[$1]}
+    # echo ${@[2,-1]}
     url="${urls[$1]}$(omz_urlencode ${@[2,-1]})"
   else
     # build main page url:
