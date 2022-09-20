@@ -1,7 +1,6 @@
 # This tmux statusbar config was created by tmuxline.vim
 # on ven, 16 set 2022
 
-#set $bg #282828
 set -g status-justify "left"
 set -g status "on"
 set -g status-left-style "none"
