@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# workplace-setup (pane-layout & auto-tools-startup),
+# tayout = tmux + layout
+# workplace-setup (pane-layout & auto-tools-startup)
 
 tmux rename-window -t 0 default
 
