@@ -125,10 +125,9 @@ ex ()
   fi
 }
 
-# load in fzf key bindings, auto-completion 
-if [ -f ~/.fzf.bash ]; then
-	source ~/.fzf.bash
-fi
+# load in fzf key bindings, no auto-completion 
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash 
 
 # auto-start commands only in graphical interface
 if [ "$TERM" != "linux" ]; then

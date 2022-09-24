@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Use powerline
 USE_POWERLINE="true"
 
@@ -96,19 +98,19 @@ bindkey '^[[Z' undo # Shift+tab undo last action
 # add alt+period shortcut for last parameter
 bindkey '^[.' insert-last-word 
 
-# add fzf to tmux sessionizer 
-if [ -x "$(command -v fmux)" ]; then
-	bindkey -s ^f "fmux\n"
-fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# load in fzf key bindings, auto-completion 
-if [ -f ~/.fzf.zsh ]; then 
-	source ~/.fzf.zsh
+# load in fzf key bindings, no auto-completion 
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh 
+
+
+# add fzf to tmux sessionizer 
+if [ -x "$(command -v fmux)" ]; then
+	bindkey -s ^f "fmux\n"
 fi
 
 # auto-start commands only in graphical interface
