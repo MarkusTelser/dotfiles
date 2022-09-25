@@ -31,20 +31,25 @@ general {
 
 cpu_usage {
         format = " cpu: %usage "
+        format = " 龍  %usage "
 				# format_above_threshold = " cpu %usage !! "
 				max_threshold = "90"
 }
 
 cpu_temperature 0 {
-				format=" temp: %degrees°C "
-				format_above_threshold=" %degrees °C 🌶 "
+				format=" temp: %degrees °C "
+				format="   %degrees °C "
+				format_above_threshold="   %degrees °C "
 				max_threshold="75"
+# TODO add "cant read temp" format
 }
 
 memory {
 				memory_used_method="classical"
         format = " ram: %used/%total (%percentage_used) " 
-        format_degraded = " ram: %used of %total (%percentage_used) ⚠ " 
+        format = "    %used/%total (%percentage_used) " 
+        format_degraded = " ram: %used of %total (%percentage_used)   " 
+        format_degraded = "   %used of %total (%percentage_used) " 
         threshold_degraded = "10%"
         threshold_critical = "5%"
 }
@@ -52,57 +57,67 @@ memory {
 disk "/" {
 				# format = " hdd  %percentage_free of %total"
 				format = " hdd: %free (%percentage_free)"
+				format = "   %free (%percentage_free)"
 
 				# format = " 🖴  %percentage_free of %total"
 				# format = " 🖴 %free (%percentage_free)"
 				
-				low_threshold="20"
+				low_threshold="10"
 				threshold_type="gbytes_free"
 }
 
 path_exists "FILME" {
 				path="/run/media/carlos/FILME/" 
-				format=" 📷 "
+				format="   "
 				format_down=""	
 }
 
 path_exists "VIRTUALBOXES" {
 				path="/run/media/carlos/VIRTUALBOXES/" 
-				format=" 🖥  "
+				format="  "
 				format_down=""	
 }
 
 ipv6 {
 				format_up=" ipv6: %ip "
+				format_up="  %ip "
 				format_down=" no IPv6 "
+				format_down="  "
 }
 
 wireless "_first_" {
 				format_up = " wlan: %quality %bitrate %essid"
+				format_up = " 直 %essid %quality %bitrate "
 				format_down = " no wlan "
+				format_down = " 睊 "
 }
 
 ethernet "_first_" {
 				# if you use %speed, i3status requires root privileges
         format_up = " lan: %ip %speed "
+        format_up = "   %ip %speed "
         format_down = " no lan "
+        format_down = "  "
 }
 
 battery "all" {
         format = " batt: %percentage %status (%consumption for %remaining) "
-        format_down = " no battery "
+        format = " %status  %percentage (%consumption for %remaining) "
+        format_down = "   "
         last_full_capacity = true
         integer_battery_capacity = true
-        status_bat = ""
-				status_chr = "⚡"
-        status_full = ""
-        status_unk = "?"
+        status_bat = "  "
+				status_chr = ""
+        status_full = "  "
+        status_unk = " "
         low_threshold = 20
         threshold_type = "percentage"
 }
 
 tztime "local" {
         format = " dtime: %H:%M %d/%m/%y | "
+        format = "   %H:%M %d/%m/%y | "
+				# format = "   %H:%M %d/%m/%y | "
         # format = "dtime: %Y-%m-%d %H:%M:%S"
 				timezone = "Europe/Rome"
 }

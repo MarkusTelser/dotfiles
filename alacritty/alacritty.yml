@@ -29,45 +29,24 @@ scrolling:
   # Scrolling distance multiplier.
   multiplier: 4
 
+# Font configuration
+
 font:
   normal:
-    family: Source Code Pro Semibold 
+    family: Source Code Pro Semibold
     style: Regular
 
   bold:
-    family: Source Code Pro Semibold 
-    style: Semibold
+    family: Source Code Pro Semibold
+    style: Bold
 
   italic:
-    family: Source Code Pro Semibold 
+    family: Source Code Pro Semibold
     style: Italic 
 
   bold_italic:
-    family: Source Code Pro Semibold 
-    style: Semibold Italic 
-
-  size: 14
-
-  offset:
-    x: 0
-    y: 0
-
-font:
-  normal:
-    family: DejaVu Sans Mono 
-    style: Book
-
-  bold:
-    family: DejaVu Sans Mono 
-    style: Bold 
-
-  italic:
-    family: DejaVu Sans Mono 
-    style: Oblique 
-
-  bold_italic:
-    family: DejaVu Sans Mono 
-    style: Bold Oblique 
+    family: Source Code Pro Semibold
+    style: Bold Italic 
 
   size: 13
 
@@ -75,8 +54,28 @@ font:
     x: 0
     y: 0
 
-# sudo pacman -S ttf-iosevka-nerd
-# Font configuration
+font:
+  normal:
+    family: DejaVu Sans Mono Nerd Font
+    style: Book
+
+  bold:
+    family: DejaVu Sans Mono Nerd Font
+    style: Bold 
+
+  italic:
+    family: DejaVu Sans Mono Nerd Font
+    style: Oblique 
+
+  bold_italic:
+    family: DejaVu Sans Mono Nerd Font
+    style: Bold Oblique 
+
+  size: 14
+
+  offset:
+    x: 0
+    y: 0
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }

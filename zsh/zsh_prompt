@@ -35,10 +35,10 @@ PC="${BLUE}" # directory path color
 # the return value of the last executed command
 #FAIL_STATUS="${RED}➯ %f"
 #SUCC_STATUS="${GREEN}➯ %f"
-#FAIL_STATUS="${RED}🠲 %f"
-#SUCC_STATUS="${GREEN}🠲 %f"
-FAIL_STATUS="${RED}🠞 %f"
-SUCC_STATUS="${GREEN}🠞 %f"
+#FAIL_STATUS="${RED}ﰲ %f"
+#SUCC_STATUS="${GREEN}ﰲ %f"
+FAIL_STATUS="${RED}ﰲ %f"
+SUCC_STATUS="${GREEN}ﰲ %f"
 
 STATUS_CODE="%(?.$SUCC_STATUS.$FAIL_STATUS)"
 
