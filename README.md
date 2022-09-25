@@ -17,7 +17,7 @@ otherwise you can manually copy/link the files. All overwritten files (that aren
 ## Examples
 ![example1](https://i.imgur.com/tlA6xLD.jpg)
 ![example2](https://i.imgur.com/WTVZ3Eh.jpg)
-![demonstration-gif](https://i.imgur.com/nNyyq76.gif)
+![demonstration-gif](https://i.imgur.com/Hk9effW.gif)
 
 ## Support
 You can give back on   [PayPal](https://paypal.me/markustelser), [Buy Me A Coffee](https://www.buymeacoffee.com/markustelser) and [Say Thanks](https://saythanks.io/to/markus.telser99).
