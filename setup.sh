@@ -268,7 +268,7 @@ function i3 {
 	curl -fLo "vermilion-lake.jpg" "https://initiate.alphacoders.com/download/wallpaper/452268/images7/jpg/725996322576504"
 	curl -fLo "mountain-view.jpg" "https://wallpaperaccess.com/download/mountain-sunset-4k-1825322"
 	curl -fLo "promontory-point-chicago.png" "https://i.redd.it/t7v63cixnni91.png"
-
+	curl -fLo "shanghai-city-lights.jpg" "https://i.redd.it/8vya3ayxu5451.jpg"
 }
 
 function scripts {
@@ -286,9 +286,11 @@ function scripts {
 
 	chmod +x $CDIR/scripts/tayout.sh 
 	chmod +x $CDIR/scripts/fmux.sh 
+	chmod +x $CDIR/scripts/brandr.sh 
 
 	createSymLink $CDIR/scripts/tayout.sh $HOME/.local/bin/tayout
 	createSymLink $CDIR/scripts/fmux.sh $HOME/.local/bin/fmux
+	createSymLink $CDIR/scripts/brandr.sh $HOME/.local/bin/brandr
 }
 
 # -------------
