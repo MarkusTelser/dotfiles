@@ -277,9 +277,9 @@ function scripts {
 	fi
 
 	if [ -x "$(command -v pacman)" ]; then
-    pacman --noconfirm -S bat
+    pacman --noconfirm -S bat xdotool
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install bat
+		apt-get -y install bat xdotool
 		# on debian or ubuntu bat useses the batcat command by default
 		createSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
@@ -287,10 +287,12 @@ function scripts {
 	chmod +x $CDIR/scripts/tayout.sh 
 	chmod +x $CDIR/scripts/fmux.sh 
 	chmod +x $CDIR/scripts/brandr.sh 
+	chmod +x $CDIR/scripts/olacritty.sh 
 
 	createSymLink $CDIR/scripts/tayout.sh $HOME/.local/bin/tayout
 	createSymLink $CDIR/scripts/fmux.sh $HOME/.local/bin/fmux
 	createSymLink $CDIR/scripts/brandr.sh $HOME/.local/bin/brandr
+	createSymLink $CDIR/scripts/olacritty.sh $HOME/.local/bin/olacritty
 }
 
 # -------------
