@@ -31,7 +31,7 @@ then
     SHELL_CWD=$(pwd -P)
     popd
     # Start alacritty with the working directory
-    alacritty --working-directory $SHELL_CWD
+    alacritty --working-directory "$SHELL_CWD"
 else
     alacritty
 fi
