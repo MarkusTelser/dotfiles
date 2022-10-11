@@ -86,7 +86,7 @@ function pre_modules {
 	|| [[ "${modules[*]}" =~ "zsh" ]] \
 	|| [[ "${modules[*]}" =~ "i3" ]]; then
 		if [ -x "$(command -v pacman)" ]; then
-			pacman --noconfirm -S curl
+			pacman --noconfirm -S curl ttf-dejavu
 		elif [ -x "$(command -v apt-get)" ]; then
 			apt-get -y install curl
 		fi	
