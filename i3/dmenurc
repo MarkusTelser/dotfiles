@@ -6,7 +6,7 @@
 DMENU_FN="DejaVuSans-12"
 
 ## height of menu line
-DMENU_HG="25"
+DMENU_HG="28"
 
 ## background colour for unselected menu-items
 DMENU_NB="#222D31"
