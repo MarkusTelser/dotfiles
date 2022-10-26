@@ -284,15 +284,11 @@ function scripts {
 		createSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
 
-	chmod +x $CDIR/scripts/tayout.sh 
-	chmod +x $CDIR/scripts/fmux.sh 
-	chmod +x $CDIR/scripts/brandr.sh 
-	chmod +x $CDIR/scripts/olacritty.sh 
+	chmod +x $CDIR/scripts/*
 
-	createSymLink $CDIR/scripts/tayout.sh $HOME/.local/bin/tayout
-	createSymLink $CDIR/scripts/fmux.sh $HOME/.local/bin/fmux
-	createSymLink $CDIR/scripts/brandr.sh $HOME/.local/bin/brandr
-	createSymLink $CDIR/scripts/olacritty.sh $HOME/.local/bin/olacritty
+	for filename in $CDIR/scripts/*; do
+		createSymLink $filename $HOME/.local/bin/$(basename ${filename%.sh})
+	done
 }
 
 # -------------
