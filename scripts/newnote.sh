@@ -42,7 +42,7 @@ rawurlencode() {
 urlencoded=$(rawurlencode "$1")
 current_browser=$(xdotool search --desktop $(xdotool get_desktop) --class Brave)
 if [ -z "$current_browser" ]; then
-	brave --new-window $urlencoded &> /dev/null
+	brave --new-window $urlencoded &> /dev/null & 
 else
 	brave $urlencoded &> /dev/null
 fi
