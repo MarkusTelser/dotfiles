@@ -6,10 +6,10 @@
 # .zshrc file along with other parameters.
 
 # colored aliases
-alias ls='ls --color=auto'
-alias grep='grep --colour=auto'
-alias egrep='egrep --colour=auto'
-alias fgrep='fgrep --colour=auto'
+alias ls='ls --group-directories-first --color=auto -h'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 
 # default aliases
 alias cp="cp -i"
@@ -28,9 +28,10 @@ alias n="nvim"
 alias v="vim"
 
 # path aliases
+alias ..="cd .. && pwd"
 alias cdir="cd ~/Code"
+alias ddir="cd ~/Documents"
 alias pdir="cd ~/Code/Python"
-alias edir="cd ~/Code/ESP32"
 alias mdir="cd /run/media/carlos/FILME/Filme"
 alias vdir="cd /run/media/carlos/VIRTUALBOXES/"
 
