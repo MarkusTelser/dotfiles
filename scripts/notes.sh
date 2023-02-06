@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# newnote = automated template setup
+# notes = automated template setup
 # for quickly writing notes in nvim
-# and previewing them in browser
+# and simultaneously previewing them in browser
 
 # check for title argument
 if [ -z "$1" ]; then
