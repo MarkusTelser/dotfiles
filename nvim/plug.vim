@@ -44,7 +44,7 @@ call plug#begin()
 
 	" file explorer
 	Plug 'preservim/nerdtree'
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'johnstef99/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle'}
 	Plug 'ryanoasis/vim-devicons'
 	"Plug 'kyazdani42/nvim-web-devicons'
 
