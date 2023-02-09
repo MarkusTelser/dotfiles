@@ -1,4 +1,3 @@
-" TODO show file icons in NERDTree not cut off
 " TODO differentiate between linux, windows (for example clipboard)
 " TODO check alternatives for telescope-media-files, weird bug (keeps images on
 " screen)
@@ -94,7 +93,6 @@ let &t_ZR="\e[23m"
 
 colorscheme sonokai
 
-" make background + side column transparent
-" hi Normal guibg=NONE ctermbg=NONE
-" hi clear LineNr
-" hi clear SignColumn
+" current line highlight
+set cursorline
+highlight CursorLineNr cterm=NONE ctermbg=NONE ctermfg=14 gui=NONE guibg=NONE guifg=#FFFF00

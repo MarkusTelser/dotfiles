@@ -63,6 +63,7 @@ call plug#begin()
 	Plug 'junegunn/goyo.vim'
 	Plug 'tpope/vim-commentary'
 	Plug 'dstein64/vim-startuptime'
+	Plug 'yamatsum/nvim-cursorline'
 	Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 	Plug 'gabrielelana/vim-markdown'
 	Plug 'lambdalisue/suda.vim'
