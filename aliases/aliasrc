@@ -35,14 +35,6 @@ alias pdir="cd ~/Code/Python"
 alias mdir="cd /run/media/carlos/FILME/Filme"
 alias vdir="cd /run/media/carlos/VIRTUALBOXES/"
 
-# git aliases
-alias gis="git status"
-alias gia="git add "
-alias giaa="git add ."
-alias gic="git commit -m "
-alias gip="git pull"
-alias gipp="git push"
-
 # utility aliases
 alias fz="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias neofetch="neofetch --colors 10 10 10 10 --ascii_colors 10 10 10"
