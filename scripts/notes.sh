@@ -14,7 +14,8 @@ fi
 if [ ! -f "$1" ]; then
 	touch "$1"
 	filename=$(basename -- "$1")
-	echo -e "# ${filename%.*}\n" > "$1"
+	filename=${filename%.*} # remove file ending
+	echo -e "# ${filename^}\n" > "$1"
 fi
 
 current_window=$(xdotool getwindowfocus)
