@@ -16,7 +16,7 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+x border none
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 2
 bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -141,8 +141,10 @@ bindsym $mod+u exec i3-msg '[title="'$(i3-msg -t get_tree | jq -r "recurse(.node
 bindsym $mod+plus exec ewspace 
 
 #navigate workspaces next / previous
-bindsym $mod+Ctrl+Right workspace next
+bindsym Ctrl+h workspace prev
+bindsym Ctrl+l workspace next
 bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+Right workspace next
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -198,7 +200,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 # assign [class="Skype"] $ws5
 
 # Open specific applications in floating mode
-for_window [class="^.*"] border none
+for_window [class="^.*"] border pixel 2
 for_window [floating] move position center
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="calamares"] floating enable border normal
@@ -372,10 +374,10 @@ set $darkgray #1d2021
 
 # window title bars & borders section
 # class                 border|backgr|text|indicator|child_border
-client.focused          $bg $bg $green $yellow $darkgray
-client.focused_inactive $bg $bg $yellow $bg $darkgray
-client.unfocused        $bg $bg $yellow $bg $darkgray
-client.urgent           $bg $bg $yellow $yellow $red
+client.focused          $green $bg $green $yellow $green
+client.focused_inactive $bg $bg $yellow $bg $bg
+client.unfocused        $bg $bg $yellow $bg $bg
+client.urgent           $red $bg $yellow $yellow $red
 
 
 #############################
