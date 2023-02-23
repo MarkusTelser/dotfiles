@@ -141,8 +141,8 @@ bindsym $mod+u exec i3-msg '[title="'$(i3-msg -t get_tree | jq -r "recurse(.node
 bindsym $mod+plus exec ewspace 
 
 #navigate workspaces next / previous
-bindsym Ctrl+h workspace prev
-bindsym Ctrl+l workspace next
+bindsym $mod+Mod1+h workspace prev
+bindsym $mod+Mod1+l workspace next
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
 
