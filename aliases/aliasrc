@@ -30,9 +30,10 @@ alias v="vim"
 # path aliases
 alias ..="cd .. && pwd"
 alias cdir="cd ~/Code"
-alias ddir="cd ~/Documents"
+alias hdir="cd ~/Documents"
+alias ddir="cd ~/Downloads"
 alias pdir="cd ~/Code/Python"
-alias mdir="cd /run/media/carlos/FILME/Filme"
+alias fdir="cd /run/media/carlos/FILME/Filme"
 alias vdir="cd /run/media/carlos/VIRTUALBOXES/"
 
 # utility aliases
