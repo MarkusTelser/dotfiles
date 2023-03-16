@@ -260,17 +260,13 @@ function i3 {
 	createSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
 	createSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
 
+	# download background-wallpapers into '~/Pictures/i3-wallpapers'
 	sudo -u $RUSER mkdir -p $HOME/Pictures/i3-wallpapers
 	cd $HOME/Pictures/i3-wallpapers
 	curl -fLo "layered-mountain-view.jpg" "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?cs=srgb&dl=pexels-simon-berger-1323550.jpg&fm=jpg&w=4608&h=2963"
-	curl -fLo "venice-sunrise.jpg" "https://unsplash.com/photos/s9u-sBJiRnE/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTl8fGl0YWx5JTIwc3VucmlzZXxlbnwwfHx8fDE2NjQwNDg3Njg&force=true"
-	curl -fLo "seiser-alm.jpg" "https://backiee.com/static/wpdb/wallpapers/3840x2160/190728.jpg"
 	curl -fLo "seiser-alm2.jpg" "https://backiee.com/static/wpdb/wallpapers/3840x2160/190580.jpg"
-	curl -fLo "chicago-sunset.jpg" "https://initiate.alphacoders.com/download/wallpaper/370695/images8/jpg/595052506030710"
-	curl -fLo "vermilion-lake.jpg" "https://initiate.alphacoders.com/download/wallpaper/452268/images7/jpg/725996322576504"
-	curl -fLo "mountain-view.jpg" "https://wallpaperaccess.com/download/mountain-sunset-4k-1825322"
 	curl -fLo "promontory-point-chicago.png" "https://i.redd.it/t7v63cixnni91.png"
-	curl -fLo "shanghai-city-lights.jpg" "https://i.redd.it/8vya3ayxu5451.jpg"
+	curl -fLo "green-rice-field-sky.jpg" "https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg?cs=srgb&dl=pexels-johannes-plenio-1146708.jpg&fm=jpg&w=5068&h=2850"
 }
 
 function scripts {
