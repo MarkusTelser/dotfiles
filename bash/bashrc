@@ -57,6 +57,11 @@ if [ -f ~/.config/aliasrc ]; then
     source ~/.config/aliasrc
 fi
 
+# source smartcd function
+if [ -f ~/.local/bin/smartcd ]; then
+		source ~/.local/bin/smartcd
+fi
+
 # Bash prompt customization.
 # The additional configuration of the prompt are put
 # into a separate file like ~/.bash_prompt

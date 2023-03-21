@@ -49,6 +49,11 @@ if [ -f ~/.config/aliasrc ]; then
     source ~/.config/aliasrc
 fi
 
+# source smartcd function
+if [ -f ~/.local/bin/smartcd ]; then
+		source ~/.local/bin/smartcd
+fi
+
 # load PLUGINS
 if [ -h ~/.config/zsh/.plugins ]; then
 	for file in ~/.config/zsh/.plugins/*; do
