@@ -10,6 +10,8 @@ alias ls='ls --group-directories-first --color=auto -h'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
 
 # default aliases
 alias cp="cp -i"
@@ -34,7 +36,7 @@ alias ddir="cd ~/Documents"
 alias bdir="cd ~/Downloads" # b = bullshit
 alias pdir="cd ~/Code/Python"
 alias fdir="cd /run/media/carlos/FILME/Filme"
-alias vdir="cd /run/media/carlos/VIRTUALBOXES/"
+alias vmdir="cd /run/media/carlos/VIRTUALBOXES/"
 
 # utility aliases
 alias fz="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"

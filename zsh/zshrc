@@ -127,3 +127,11 @@ if [ "$TERM" != "linux" ]; then
 		neofetch
 	fi
 fi
+
+# enable color support of ls 
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
+# colored completion - use my LS_COLORS
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
