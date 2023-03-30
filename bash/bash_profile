@@ -9,11 +9,12 @@
 # a new terminal window (xterm) then .bashrc is executed before 
 # the window command prompt.
 
-# override the default command for fzf-key-binding
+# override the default find command for fzf
 export FZF_CTRL_T_COMMAND="find . \
 -not \( -path \"*/.git*\" -type d -prune \) \
 -not \( -path \"*/node_modules\" -type d -prune \) \
 -not \( -path \"*/.*\" -prune \)"
+export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
 
 
 if [ "$TERM" == "linux" ]; then
