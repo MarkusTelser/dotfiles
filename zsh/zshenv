@@ -18,3 +18,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export LESS=-r
 
 export KEYTIMEOUT=1 # less lag between mode-switch 
+
+# override the default command for fzf-key-binding
+export FZF_CTRL_T_COMMAND="find . \
+-not \( -path \"*/.git*\" -type d -prune \) \
+-not \( -path \"*/node_modules\" -type d -prune \) \
+-not \( -path \"*/.*\" -prune \)"
