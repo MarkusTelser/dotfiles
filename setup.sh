@@ -264,9 +264,11 @@ function i3 {
 	sudo -u $RUSER mkdir -p $HOME/Pictures/i3-wallpapers
 	cd $HOME/Pictures/i3-wallpapers
 	curl -fLo "layered-mountain-view.jpg" "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?cs=srgb&dl=pexels-simon-berger-1323550.jpg&fm=jpg&w=4608&h=2963"
-	curl -fLo "seiser-alm2.jpg" "https://backiee.com/static/wpdb/wallpapers/3840x2160/190580.jpg"
+	curl -fLo "seiser-alm.jpg" "https://backiee.com/static/wpdb/wallpapers/3840x2160/190580.jpg"
 	curl -fLo "promontory-point-chicago.png" "https://i.redd.it/t7v63cixnni91.png"
 	curl -fLo "green-rice-field-sky.jpg" "https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg?cs=srgb&dl=pexels-johannes-plenio-1146708.jpg&fm=jpg&w=5068&h=2850"
+	curl -fLo "appenzell-mountain-range.jpg" "https://4kwallpapers.com/images/wallpapers/appenzell-alps-switzerland-mountain-range-glacier-mountains-4979x3320-6397.jpg"
+	curl -fLo "alpstein-mountain-range.jpg" "https://4kwallpapers.com/images/wallpapers/alpstein-switzerland-mountain-range-landscape-foggy-aerial-3840x2400-4257.jpg"
 }
 
 function scripts {
