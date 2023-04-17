@@ -1,0 +1,17 @@
+
+# THIS FILE SHOULD BE OVERWRITTEN WITH YOUR PERSONAL PREFERENCES!!!
+# -----------------------------------------------------------------
+# The file paliasrc (=personal-aliasrc) is an extension of the original config aliasrc.
+# It groups personal user/machine-specific settings into a separate file,
+# to provide a better plug and play experience after cloning this repo.
+# The corresponding shell-configuration sources this file, like the original.
+
+
+# personal path aliases
+alias cdir="cd ~/Code"
+alias ddir="cd ~/Documents"
+alias sdir="cd ~/Documents/Lehrer\ 2022-23/"
+alias bdir="cd ~/Downloads" # b = bullshit
+alias pdir="cd ~/Code/Python"
+alias fdir="cd /run/media/carlos/FILME/Filme"
+alias vmdir="cd /run/media/carlos/VIRTUALBOXES/"

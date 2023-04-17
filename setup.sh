@@ -144,6 +144,7 @@ function pre_modules {
 		fi
 
 		createSymLink $CDIR/aliases/aliasrc $HOME/.config/aliasrc
+		createSymLink $CDIR/aliases/paliasrc $HOME/.config/paliasrc
 		createSymLink $CDIR/dircolors/dir_colors $HOME/.dircolors
 	fi
 }

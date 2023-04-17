@@ -45,9 +45,8 @@ bindkey -e
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.config/aliasrc, instead of adding them here directly.
-if [ -f ~/.config/aliasrc ]; then
-    source ~/.config/aliasrc
-fi
+[ -f ~/.config/aliasrc ] && source ~/.config/aliasrc
+[ -f ~/.config/paliasrc ] && source ~/.config/paliasrc
 
 # source smartcd function
 if [ -f ~/.local/bin/smartcd ]; then

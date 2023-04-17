@@ -19,6 +19,7 @@ alias df='df -h'
 alias more="less"
 alias ll="ls -l"
 alias la="ls -la"
+alias lt="ls -ltr" # sort by time
 alias free='free -h'
 
 # abbreviation aliases 
@@ -31,12 +32,6 @@ alias v="vim"
 
 # path aliases
 alias ..="cd .. && pwd"
-alias cdir="cd ~/Code"
-alias ddir="cd ~/Documents"
-alias bdir="cd ~/Downloads" # b = bullshit
-alias pdir="cd ~/Code/Python"
-alias fdir="cd /run/media/carlos/FILME/Filme"
-alias vmdir="cd /run/media/carlos/VIRTUALBOXES/"
 
 # utility aliases
 alias fz="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
