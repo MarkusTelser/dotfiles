@@ -14,4 +14,6 @@ alias sdir="cd ~/Documents/Lehrer\ 2022-23/"
 alias bdir="cd ~/Downloads" # b = bullshit
 alias pdir="cd ~/Code/Python"
 alias fdir="cd /run/media/carlos/FILME/Filme"
+alias f2dir="cd /run/media/carlos/FILME2/Filme"
 alias vmdir="cd /run/media/carlos/VIRTUALBOXES/"
+alias hdir="cd ~/Code/dotfiles"
