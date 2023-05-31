@@ -3,19 +3,28 @@
 # notes = automated template setup
 # for quickly writing notes in nvim
 # and simultaneously previewing them in browser
+# plugin: "Markdown-Viewer" by github.com/simov (version 5.1)
 
 # check for title argument
 if [ -z "$1" ]; then
-	echo "No name as argument privided"
+	echo "Error: No name as argument privided"
+	exit 1
+fi
+
+filename=$(basename -- "$1")
+extension="${filename##*.}"
+
+# check for wrong file extension types
+if [[ "$extension" != "md" && "$extension" != "markdown" ]]; then
+	echo "Error: Invalid file type"
 	exit 1
 fi
 
 # create file and write title, if it exists
 if [ ! -f "$1" ]; then
 	touch "$1"
-	filename=$(basename -- "$1")
-	filename=${filename%.*} # remove file ending
-	echo -e "# ${filename^}\n" > "$1"
+	title=${filename%.*} # remove file ending
+	echo -e "# ${title^}\n" > "$1"
 fi
 
 current_window=$(xdotool getwindowfocus)
