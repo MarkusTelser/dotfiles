@@ -5,3 +5,4 @@ set packpath+=~/.vim
 runtime ./plug.vim
 runtime ./main.vim
 runtime ./keymaps.vim
+runtime ./default.vim
