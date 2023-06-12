@@ -32,6 +32,7 @@ alias v="vim"
 
 # path aliases
 alias ..="cd .. && pwd"
+alias ...="cd ../.. && pwd"
 
 # utility aliases
 alias fz="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
