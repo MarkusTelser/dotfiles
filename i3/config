@@ -285,8 +285,8 @@ exec_always --no-startup-id megasync
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec --no-startup-id udiskie --automount --notify --tray
-exec --no-startup-id feh --bg-scale --randomize ~/Pictures/i3-wallpapers/*
-# exec --no-startup-id feh --bg-scale ~/Pictures/i3-wallpapers/seiser-alm2.jpg
+exec --no-startup-id feh --no-fehbg --bg-scale --randomize ~/Pictures/i3-wallpapers/*
+# exec --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/i3-wallpapers/seiser-alm2.jpg
 
 
 # Color palette used for the terminal ( ~/.Xresources file )
