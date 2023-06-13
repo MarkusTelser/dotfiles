@@ -259,7 +259,9 @@ function i3 {
 	createSymLink $CDIR/i3/config $HOME/.config/i3/config
 	createSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
 	createSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
+	createSymLink $CDIR/i3/xinitrc $HOME/.xinitrc
 
+	chmod +x "$CDIR/i3/dmenu_recency"
 	ln -sf "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 
 	ln -sf "$CDIR/i3/dmenu_recency" "/bin/dmenu_recency" 
 
