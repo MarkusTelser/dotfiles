@@ -260,6 +260,9 @@ function i3 {
 	createSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
 	createSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
 
+	ln -sf "/usr/bin/dmenu_recency" "$CDIR/i3/dmenu_recency"
+	ln -sf "/bin/dmenu_recency" "$CDIR/i3/dmenu_recency"
+
 	# download background-wallpapers into '~/Pictures/i3-wallpapers'
 	sudo -u $RUSER mkdir -p $HOME/Pictures/i3-wallpapers
 	cd $HOME/Pictures/i3-wallpapers
