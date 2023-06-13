@@ -213,11 +213,11 @@ function tmux {
 function nvim {
 	# install neovim through official distro repos
 	if [ -x "$(command -v pacman)" ]; then
-    pacman --noconfirm -S vim neovim nodejs go clang python3 python-pip base-devel fd ripgrep
+    pacman --noconfirm -S neovim nodejs go clang python3 python-pip base-devel fd ripgrep
 	elif [ -x "$(command -v apt-get)" ]; then
 		add-apt-repository -y ppa:neovim-ppa/stable
 		apt-get -y update
-		apt-get -y install vim neovim nodejs golang clangd python3 python3-pip build-essential fd-find ripgrep
+		apt-get -y install neovim nodejs golang clangd python3 python3-pip build-essential fd-find ripgrep
 		ln -sf $(which fdfind) ~/.local/bin/fd
 		print "WARNING: Make sure that \$HOME/.local/bin is in your \$PATH" 1
 	fi
@@ -228,7 +228,6 @@ function nvim {
 		--create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 	createSymLink $CDIR/nvim $HOME/.config/nvim
-	createSymLink $CDIR/vim/vimrc $HOME/.vimrc
 
 	sudo -u $RUSER nvim +PlugInstall +qall
 }
