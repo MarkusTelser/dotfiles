@@ -41,7 +41,6 @@ cpu_temperature 0 {
 				format="   %degrees °C "
 				format_above_threshold="   %degrees °C "
 				max_threshold="75"
-				format_down=" no  "	
 }
 
 memory {
