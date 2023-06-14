@@ -237,9 +237,10 @@ function i3 {
 	if [ -x "$(command -v pacman)" ]; then
     pacman --noconfirm -S dmenu # breaks dependencys with dmenu-manjaro
     pacman --noconfirm -S i3status # breaks dependencys with i3status-manjaro
+    pacman --noconfirm -S xdg-user-dirs # TODO: check if alright
     pacman --noconfirm -S i3-wm i3-gaps i3lock feh picom udiskie flameshot
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install i3 dmenu feh picom udiskie flameshot
+		apt-get -y install i3 dmenu feh picom udiskie flameshot xdg-user-dirs
 	fi
 
 	if [[ ! -d $HOME/.config/i3 ]]; then
@@ -259,6 +260,7 @@ function i3 {
 	createSymLink $CDIR/i3/config $HOME/.config/i3/config
 	createSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
 	createSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
+	createSymLink "$CDIR/i3/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
 	createSymLink $CDIR/i3/xinitrc $HOME/.xinitrc
 
 	chmod +x "$CDIR/i3/dmenu_recency"
