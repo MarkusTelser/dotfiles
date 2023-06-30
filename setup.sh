@@ -237,10 +237,10 @@ function i3 {
 	if [ -x "$(command -v pacman)" ]; then
     pacman --noconfirm -S dmenu # breaks dependencys with dmenu-manjaro
     pacman --noconfirm -S i3status # breaks dependencys with i3status-manjaro
-    pacman --noconfirm -S xdg-user-dirs # TODO: check if alright
-    pacman --noconfirm -S i3-wm i3-gaps i3lock feh picom udiskie flameshot
+    pacman --noconfirm -S xdg-utils xdg-user-dirs # TODO: check if alright
+    pacman --noconfirm -S i3-wm i3-gaps i3lock i3blocks feh picom udiskie flameshot
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install i3 dmenu feh picom udiskie flameshot xdg-user-dirs
+		apt-get -y install i3 dmenu feh picom udiskie flameshot xdg-utils xdg-user-dirs
 	fi
 
 	if [[ ! -d $HOME/.config/i3 ]]; then
@@ -268,6 +268,10 @@ function i3 {
 	ln -sf "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 
 	ln -sf "$CDIR/i3/dmenu_recency" "/bin/dmenu_recency" 
 
+	chmod +x "$CDIR/i3/i3exit"
+	ln -sf "$CDIR/i3/i3exit" "/usr/bin/i3exit" 
+	ln -sf "$CDIR/i3/i3exit" "/bin/i3exit" 
+		
 	# download background-wallpapers into '~/Pictures/i3-wallpapers'
 	sudo -u $RUSER mkdir -p $HOME/Pictures/i3-wallpapers
 	cd $HOME/Pictures/i3-wallpapers
