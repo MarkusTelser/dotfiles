@@ -263,6 +263,7 @@ function i3 {
 	createSymLink $CDIR/i3/xinitrc $HOME/.xinitrc
 
 	ln -sf "$CDIR/i3/user-dirs.defaults" "/etc/xdg/user-dirs.defaults"
+	ln -sf "$CDIR/i3/slick-greeter.conf" "/etc/lightdm/slick-greeter.conf"
 
 	chmod +x "$CDIR/i3/dmenu_recency"
 	ln -sf "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 
@@ -281,6 +282,9 @@ function i3 {
 	curl -fLo "green-rice-field-sky.jpg" "https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg?cs=srgb&dl=pexels-johannes-plenio-1146708.jpg&fm=jpg&w=5068&h=2850"
 	curl -fLo "appenzell-mountain-range.jpg" "https://4kwallpapers.com/images/wallpapers/appenzell-alps-switzerland-mountain-range-glacier-mountains-4979x3320-6397.jpg"
 	curl -fLo "alpstein-mountain-range.jpg" "https://4kwallpapers.com/images/wallpapers/alpstein-switzerland-mountain-range-landscape-foggy-aerial-3840x2400-4257.jpg"
+
+	# download slick-greeter background
+	curl -fLo "/usr/share/backgrounds/slick-greeter-background.jpg" "https://rare-gallery.com/uploads/posts/507127-triangle-3d.jpg"
 }
 
 function scripts {
