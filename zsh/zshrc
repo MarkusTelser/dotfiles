@@ -102,9 +102,11 @@ bindkey '^[[Z' undo # Shift+tab undo last action
 # add alt+period shortcut for last parameter
 bindkey '^[.' insert-last-word 
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+# set PATH so it includes user's private bin if it exists and isn't already in path
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+	if [ -d "$HOME/.local/bin" ] ; then
+			PATH="$HOME/.local/bin:$PATH"
+	fi
 fi
 
 # load in fzf key bindings, no auto-completion 

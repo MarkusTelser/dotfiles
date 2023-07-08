@@ -45,9 +45,11 @@ shopt -s checkwinsize
 # Enable history appending instead of overwriting
 shopt -s histappend
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+# set PATH so it includes user's private bin if it exists and isn't already in path
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+	if [ -d "$HOME/.local/bin" ] ; then
+			PATH="$HOME/.local/bin:$PATH"
+	fi
 fi
 
 # Alias definitions.
