@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+
+# check if 4k-sectors are supported and used on drive
+# switch ssd to native 4k-blocks
+nvme id-ns -H /dev/nvme0n1 | grep "4096 bytes"
+nvme format --lbaf=1 /dev/nvme0n1
+
+# set the keyboard layout 
+loadkeys de-latin1
+
+# verify the boot mode
+[ -d /sys/firmware/efi/efivars ] && echo "Success: Booted in UEFI"
+
+# check internet connection 
+ping -c 5 8.8.8.8 
+
+# set correct timezone
+timedatectl set-timezone "Europe/Rome"
+timedatectl | grep -i time
+
+# partition disks
+sudo parted /dev/sda
+unit GiB
+mklabel gpt
+mkpart "efi partition" fat32 1MiB 551MiB # efi = 550Mib
+mkpart "boot partition" ext4 551MiB 1.5GiB # boot = 1GiB 
+mkpart "main partition" 1.5GiB 100% # main = REST GiB (LVM on LUKS2)
+set 1 esp on
+set 3 lvm on
+print free
+quit
+
+# load encryption kernel modules 
+modprobe dm-crypt dm-mod
+
+# setup encryption
+cryptsetup luksFormat --type luks2 /dev/sda3
+cryptsetup luksOpen --type luks2 /dev/sda3 luks
+
+# create LVM partitions
+# append "-C y" to set contiguous allocation policy for SWAP
+pvcreate /dev/mapper/luks
+vgcreate vg0 /dev/mappper/luks
+lvcreate --size 18G vg0 --name swap 
+lvcreate --size 40G vg0 --name root
+lvcreate --size 200G vg0 --name home
+lvcreate -l +100%FREE vg0 --name ext
+
+# format file systems
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/vg0/root
+mkfs.ext4 /dev/vg0/home
+mkfs.ext4 /dev/vg0/ext
+
+# initialize and enable swap
+mkswap /dev/vg0/swap
+swapon /dev/vg0/swap
+
+# mount partitions
+mount /dev/vg0/root /mnt
+mount --mkdir /dev/sda2 /mnt/boot
+mount --mkdir /dev/sda1 /mnt/boot/efi
+mount --mkdir /dev/vg0/home /mnt/home
+mount --mkdir /dev/vg0/ext /ext
+
+# install the basis
+pacstrap -K /mnt base base-devel linux linux-firmware lvm2 sudo git neovim vi
+
+# generate fstab file and chroot into the new system
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+
+# set hostname 
+nvim /etc/hostname
+
+# set root password
+passwd
+
+# edit the host file
+sudo tee /etc/hosts << EOF
+127.0.0.1	 localhost
+::1				 localhost
+127.0.1.1	 xyz
+EOF
+
+# set time zone and sync hwclock
+ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
+hwclock --systohc
+date
+
+# localization
+nvim /etc/locale.gen && locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=de-latin1" >> /etc/vconsole.conf
+echo "XKBLAYOUT=de-latin1" >> /etc/vconsole.conf
+
+# configure mkinitcpio with modules needed for the image & regenerate:
+# Add 'ext4' to MODULES
+# Add 'encrypt', 'lvm2' and 'resume' to HOOKS before 'filesystems'
+nvim /etc/mkinitcpio.conf
+mkinitcpio -p linux
+
+# setup the boot loader grub
+pacman -S grub efibootmgr 
+grub-install --target=x86_64-efi --bootloader=GRUB --efi-directory=/boot/efi --removable
+blkid | grep swap >> /etc/default/grub # prints UUIDs of block devices
+# In /etc/default/grub edit the line GRUB_CMDLINE_LINUX to:
+# GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards root=/dev/vg0/root"
+# also add "resume=UUID=<UUID_OF_SWAP>"
+# and remove "quiet" from GRUB_CMDLINE_LINUX_DEFAULT
+nvim /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# install & enable network manager, dhcp- and ssh-server
+pacman -S networkmanager dhcpcd openssh
+systemctl enable NetworkManager dhcpcd sshd
+
+# stop and restart
+exit 
+umount -R /mnt && swapoff -a
+reboot
+
+# POST-INSTALL:
+# -------------
+
+# set the system default keyboard mapping for X11
+localectl set-x11-keymap de
+
+# create unpriviledged user (with sudo)
+visudo # uncomment: %wheel ALL=(ALL:ALL) ALL
+groupadd carlos && groupadd luis
+useradd -g carlos -G carlos,wheel -m carlos
+useradd -d /ext -g luis -G luis,wheel -m luis 
+passwd carlos && passwd luis
+su -l carlos
+
+# setup reflector script to retrieve mirror list
+sudo pacman -S reflector
+sudo tee /etc/xdg/reflector/reflector.conf << EOF
+--latest 5
+--sort rate
+--protocol https
+--country "Italy,Germany,"
+--save /etc/pacman.d/mirrorlist
+EOF
+sudo systemctl enable --now reflector.service
+
+# install yay (or paru) to navigate the AUR
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin && makepkg -si
+
+# install X-Server, Display Manager, Greeter
+sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter 
+sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm # needed for startx
+sudo systemctl enable lightdm.service
+# add the following lines to '/etc/lightdm/lightdm.conf' after the section "[Seat:*]":
+# greeter-session=lightdm-slick-greeter
+# user-session=i3
+sudo nvim /etc/lightdm/lightdm.conf
+
+# install graphics driver
+# https://wiki.archlinux.org/title/xorg#Driver_installation
+sudo pacman -S xf86-video-intel xf86-video-nouveau 
+# sudo pacman -S xf86-input-vmmouse xf86-video-vmware
+
+# install tray icon application
+sudo pacman -S blueman network-manager-applet udiskie
+yay -S clipit pa-applet-git dmenu2 megasync-nopdfium
+
+# install my own dotfiles setup
+git clone https://github.com/markustelser/dotfiles 
+cd dotfiles && sudo ./setup.sh ~
+
+# the end
+exit && reboot
+
+# TODO fix symlink not working /etc/lightdm/slick-greeter.conf
+# TODO add maybe later https://tqdev.com/2022-luks-with-usb-unlock 
