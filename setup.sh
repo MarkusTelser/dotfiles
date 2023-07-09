@@ -284,7 +284,8 @@ function i3 {
 	curl -fLo "alpstein-mountain-range.jpg" "https://4kwallpapers.com/images/wallpapers/alpstein-switzerland-mountain-range-landscape-foggy-aerial-3840x2400-4257.jpg"
 
 	# download slick-greeter background
-	curl -fLo "/usr/share/backgrounds/slick-greeter-background.jpg" "https://rare-gallery.com/uploads/posts/507127-triangle-3d.jpg"
+	mkdir -p /usr/share/backgrounds
+	curl -fLo "/usr/share/backgrounds/slick-greeter-background.jpg" "https://besthqwallpapers.com/Uploads/21-9-2020/141561/black-geometric-shapes-4k-geometric-patterns-wavy-backgrounds-3d-figures.jpg"
 }
 
 function scripts {
