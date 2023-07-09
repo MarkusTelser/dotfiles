@@ -243,17 +243,9 @@ function i3 {
 		apt-get -y install i3 dmenu feh picom udiskie flameshot xdg-utils xdg-user-dirs
 	fi
 
-	if [[ ! -d $HOME/.config/i3 ]]; then
-		sudo -u $RUSER mkdir -p $HOME/.config/i3
-	fi
-
-	if [[ ! -d $HOME/.config/i3status ]]; then
-		sudo -u $RUSER mkdir -p $HOME/.config/i3status
-	fi
-
-	if [[ ! -d $HOME/.config/flameshot ]]; then
-		sudo -u $RUSER mkdir -p $HOME/.config/flameshot
-	fi
+	sudo -u $RUSER mkdir -p $HOME/.config/i3
+	sudo -u $RUSER mkdir -p $HOME/.config/i3status
+	sudo -u $RUSER mkdir -p $HOME/.config/flameshot
 
 	createSymLink $CDIR/i3/dmenurc $HOME/.dmenurc
 	createSymLink $CDIR/i3/picom.conf $HOME/.config/picom.conf
@@ -264,6 +256,7 @@ function i3 {
 
 	ln -sf "$CDIR/i3/user-dirs.defaults" "/etc/xdg/user-dirs.defaults"
 	ln -sf "$CDIR/i3/slick-greeter.conf" "/etc/lightdm/slick-greeter.conf"
+	ln -sf "$CDIR/i3/home-local-bin.sh" "/etc/profile.d/home-local-bin.sh"
 
 	chmod +x "$CDIR/i3/dmenu_recency"
 	ln -sf "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 
