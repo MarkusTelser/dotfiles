@@ -47,9 +47,10 @@ exec --no-startup-id start-pulseaudio-x11
 bindsym $mod+Ctrl+m exec pavucontrol
 
 # Volume controls
-bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle; exec --no-startup-id notify-send -t 500 " mute/unmute sound " 
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-; exec --no-startup-id notify-send -t 500 "   $(amixer sget Master | tail -1 | awk -F '[][]' '{ print $2 }')"
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+; exec --no-startup-id notify-send -t 500 "   $(amixer sget Master | tail -1 | awk -F '[][]' '{ print $2 }')"
+set $notify-volume exec --no-startup-id notify-send -t 500 --hint=string:x-dunst-stack-tag:volume "Sound Volume" 
+bindsym XF86AudioMute exec --no-startup-id pamixer -t; $notify-volume " $((pamixer --get-mute | grep -q true) && echo 'mute' || echo 'unmute') sound"
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5; $notify-volume "   $(pamixer --get-volume) %"
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5; $notify-volume "   $(pamixer --get-volume) %"
 
 ###############################
 
