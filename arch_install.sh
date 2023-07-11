@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
+# set the keyboard layout 
+loadkeys de-latin1
+
 # check if 4k-sectors are supported and used on drive
 # switch ssd to native 4k-blocks
 nvme id-ns -H /dev/nvme0n1 | grep "4096 bytes"
 nvme format --lbaf=1 /dev/nvme0n1
 
-# set the keyboard layout 
-loadkeys de-latin1
-
 # verify the boot mode
 [ -d /sys/firmware/efi/efivars ] && echo "Success: Booted in UEFI"
+
+# connect to WiFi access point
+ip link set <INTERFACE> up
+iw dev <INTERFACE> connect <SSID>
 
 # check internet connection 
 ping -c 5 8.8.8.8 
@@ -19,7 +23,7 @@ timedatectl set-timezone "Europe/Rome"
 timedatectl | grep -i time
 
 # partition disks
-sudo parted /dev/sda
+sudo parted /dev/nvme0n1
 unit GiB
 mklabel gpt
 mkpart "efi partition" fat32 1MiB 551MiB # efi = 550Mib
@@ -34,8 +38,10 @@ quit
 modprobe dm-crypt dm-mod
 
 # setup encryption
-cryptsetup luksFormat --type luks2 /dev/sda3
-cryptsetup luksOpen --type luks2 /dev/sda3 luks
+cryptsetup luksFormat --type luks2 /dev/nvme0n1p3
+cryptsetup luksOpen --type luks2 /dev/nvme0n1p3 luks
+
+nvme0n1p3
 
 # create LVM partitions
 # append "-C y" to set contiguous allocation policy for SWAP
@@ -47,8 +53,8 @@ lvcreate --size 200G vg0 --name home
 lvcreate -l +100%FREE vg0 --name ext
 
 # format file systems
-mkfs.fat -F32 /dev/sda1
-mkfs.ext4 /dev/sda2
+mkfs.fat -F32 /dev/nvme0n1p1
+mkfs.ext4 /dev/nvme0n1p2
 mkfs.ext4 /dev/vg0/root
 mkfs.ext4 /dev/vg0/home
 mkfs.ext4 /dev/vg0/ext
@@ -59,8 +65,8 @@ swapon /dev/vg0/swap
 
 # mount partitions
 mount /dev/vg0/root /mnt
-mount --mkdir /dev/sda2 /mnt/boot
-mount --mkdir /dev/sda1 /mnt/boot/efi
+mount --mkdir /dev/nvme0n1p2 /mnt/boot
+mount --mkdir /dev/nvme0n1p1 /mnt/boot/efi
 mount --mkdir /dev/vg0/home /mnt/home
 mount --mkdir /dev/vg0/ext /ext
 
@@ -106,9 +112,10 @@ pacman -S grub efibootmgr
 grub-install --target=x86_64-efi --bootloader=GRUB --efi-directory=/boot/efi --removable
 blkid | grep swap >> /etc/default/grub # prints UUIDs of block devices
 # In /etc/default/grub edit the line GRUB_CMDLINE_LINUX to:
-# GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards root=/dev/vg0/root"
+# GRUB_CMDLINE_LINUX="cryptdevice=/dev/nvme0n1p3:luks:allow-discards root=/dev/vg0/root"
 # also add "resume=UUID=<UUID_OF_SWAP>"
-# and remove "quiet" from GRUB_CMDLINE_LINUX_DEFAULT
+# remove "quiet" from GRUB_CMDLINE_LINUX_DEFAULT
+# and set "GRUB_TIMEOUT" to zero
 nvim /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -123,6 +130,9 @@ reboot
 
 # POST-INSTALL:
 # -------------
+
+# connect to WiFi access point
+nmcli device wifi connect <SSID> password <PASSWORD>
 
 # set the system default keyboard mapping for X11
 localectl set-x11-keymap de
@@ -146,30 +156,44 @@ sudo tee /etc/xdg/reflector/reflector.conf << EOF
 EOF
 sudo systemctl enable --now reflector.service
 
-# install yay (or paru) to navigate the AUR
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin && makepkg -si
+# install paru (or yay) to navigate the AUR
+git clone https://aur.archlinux.org/paru.git
+cd paru && makepkg -si
 
 # install X-Server, Display Manager, Greeter
 sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter 
-sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm # needed for startx
+sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm xclip # needed for startx
+# TODO install dunst and notificatin-daemon 
 sudo systemctl enable lightdm.service
 # add the following lines to '/etc/lightdm/lightdm.conf' after the section "[Seat:*]":
 # greeter-session=lightdm-slick-greeter
 # user-session=i3
 sudo nvim /etc/lightdm/lightdm.conf
 
+# change gtk3.0 theme
+sudo pacman -S materia-gtk-theme breeze-icons
+# change gtk-icon-theme-name to "bloom-classic"
+# change gtk-theme-name to "Materia-dark-compact"
+# change gtk-font-name to "DejaVu Sans 11"
+sudo nvim /usr/share/gtk-3.0/settings.ini
+
+
 # install graphics driver
 # https://wiki.archlinux.org/title/xorg#Driver_installation
 sudo pacman -S xf86-video-intel xf86-video-nouveau 
-# sudo pacman -S xf86-input-vmmouse xf86-video-vmware
+# or drivers for VirtualBox
+# sudo pacman -S xf86-input-vmmouse xf86-video-vmware 
 
 # install tray icon application
 sudo pacman -S blueman network-manager-applet udiskie
-yay -S clipit pa-applet-git dmenu2 megasync-nopdfium
+paru -S clipit pa-applet-git dmenu2 megasync-nopdfium
+
+# TODO
+sudo pacman -S pulseaudio pamixer
+sudo systemctl enable bluetooth.service
 
 # install my own dotfiles setup
-git clone https://github.com/markustelser/dotfiles 
+git clone https://github.com/markustelser/dotfiles ~/Code
 cd dotfiles && sudo ./setup.sh ~
 
 # the end
