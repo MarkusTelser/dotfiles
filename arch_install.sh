@@ -13,7 +13,7 @@ nvme format --lbaf=1 /dev/nvme0n1
 
 # connect to WiFi access point
 ip link set <INTERFACE> up
-iw dev <INTERFACE> connect <SSID>
+iwctl station <INTERFACE> connect <SSID>
 
 # check internet connection 
 ping -c 5 8.8.8.8 
@@ -40,8 +40,6 @@ modprobe dm-crypt dm-mod
 # setup encryption
 cryptsetup luksFormat --type luks2 /dev/nvme0n1p3
 cryptsetup luksOpen --type luks2 /dev/nvme0n1p3 luks
-
-nvme0n1p3
 
 # create LVM partitions
 # append "-C y" to set contiguous allocation policy for SWAP
@@ -132,6 +130,7 @@ reboot
 # -------------
 
 # connect to WiFi access point
+ip link set <INTERFACE> up
 nmcli device wifi connect <SSID> password <PASSWORD>
 
 # set the system default keyboard mapping for X11
@@ -151,7 +150,7 @@ sudo tee /etc/xdg/reflector/reflector.conf << EOF
 --latest 5
 --sort rate
 --protocol https
---country "Italy,Germany,"
+--country "Italy,"
 --save /etc/pacman.d/mirrorlist
 EOF
 sudo systemctl enable --now reflector.service
@@ -161,35 +160,32 @@ git clone https://aur.archlinux.org/paru.git
 cd paru && makepkg -si
 
 # install X-Server, Display Manager, Greeter
-sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter 
+sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter dunst
 sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm xclip # needed for startx
-# TODO install dunst and notificatin-daemon 
 sudo systemctl enable lightdm.service
 # add the following lines to '/etc/lightdm/lightdm.conf' after the section "[Seat:*]":
 # greeter-session=lightdm-slick-greeter
 # user-session=i3
 sudo nvim /etc/lightdm/lightdm.conf
 
-# change gtk3.0 theme
-sudo pacman -S materia-gtk-theme breeze-icons
+# change GTK-3.0 theme, icons and font
+sudo pacman -S materia-gtk-theme deepin-icon-theme
 # change gtk-icon-theme-name to "bloom-classic"
 # change gtk-theme-name to "Materia-dark-compact"
 # change gtk-font-name to "DejaVu Sans 11"
 sudo nvim /usr/share/gtk-3.0/settings.ini
 
-
 # install graphics driver
 # https://wiki.archlinux.org/title/xorg#Driver_installation
-sudo pacman -S xf86-video-intel xf86-video-nouveau 
-# or drivers for VirtualBox
 # sudo pacman -S xf86-input-vmmouse xf86-video-vmware 
+sudo pacman -S xf86-video-intel xf86-video-nouveau 
 
 # install tray icon application
 sudo pacman -S blueman network-manager-applet udiskie
 paru -S clipit pa-applet-git dmenu2 megasync-nopdfium
 
-# TODO
-sudo pacman -S pulseaudio pamixer
+# setup sound server and bluetooth
+sudo pacman -S pulseaudio pulseaudio-bluetooth pamixer
 sudo systemctl enable bluetooth.service
 
 # install my own dotfiles setup
