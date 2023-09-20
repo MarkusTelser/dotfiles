@@ -11,6 +11,7 @@ setopt histignorealldups # If a new command is a duplicate, remove the older one
 setopt autocd # if only directory path is entered, cd there.
 setopt inc_append_history # save commands are added to the history immediately, otherwise only when shell exits.
 setopt PROMPT_SUBST # enable func in prompt 
+setopt +o nomatch # will leave globbing expressions which don't match anything as-is
 
 # load module for locale information
 zmodload zsh/langinfo
