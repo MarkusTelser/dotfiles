@@ -287,9 +287,9 @@ function scripts {
 	fi
 
 	if [ -x "$(command -v pacman)" ]; then
-    pacman --noconfirm -S bat xdotool gawk sed
+    pacman --noconfirm -S bat xdotool gawk sed bc
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install bat xdotool gawk sed
+		apt-get -y install bat xdotool gawk sed bc
 		# on debian or ubuntu bat useses the batcat command by default
 		createSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
