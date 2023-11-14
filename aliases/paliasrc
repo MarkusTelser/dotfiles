@@ -10,7 +10,7 @@
 # personal path aliases
 alias cdir="cd ~/Code"
 alias ddir="cd ~/Documents"
-alias sdir="cd ~/Documents/Lehrer/Schuljahr' '22-23"
+alias sdir="cd ~/Documents/Lehrer/Schuljahr' '23-24"
 alias bdir="cd ~/Downloads" # b = bullshit
 alias pdir="cd ~/Code/Python"
 alias fdir="cd /run/media/carlos/FILME/Filme"
@@ -20,3 +20,5 @@ alias hdir="cd ~/Code/dotfiles"
 
 # further aliases
 alias todo="nvim ~/todo.md"
+alias hdmi-school="xrandr --output HDMI-1 --scale 1.9x2 --same-as eDP-1 --auto"
+alias hdmi-off="xrandr --output HDMI-1 --off --auto"
