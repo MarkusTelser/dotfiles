@@ -1,3 +1,5 @@
+# TODO switch from xorg to wayland, 
+# TODO switch from i3 to sway
 #!/usr/bin/env bash
 
 # set the keyboard layout 
@@ -66,7 +68,7 @@ mount /dev/vg0/root /mnt
 mount --mkdir /dev/nvme0n1p2 /mnt/boot
 mount --mkdir /dev/nvme0n1p1 /mnt/boot/efi
 mount --mkdir /dev/vg0/home /mnt/home
-mount --mkdir /dev/vg0/ext /ext
+mount --mkdir /dev/vg0/ext /mnt/ext
 
 # install the basis
 pacstrap -K /mnt base base-devel linux linux-firmware lvm2 sudo git neovim vi
@@ -178,22 +180,35 @@ sudo nvim /usr/share/gtk-3.0/settings.ini
 # install graphics driver
 # https://wiki.archlinux.org/title/xorg#Driver_installation
 # sudo pacman -S xf86-input-vmmouse xf86-video-vmware 
-sudo pacman -S xf86-video-intel xf86-video-nouveau 
+sudo pacman -S mesa nvidia nvidia-utils
 
 # install tray icon application
 sudo pacman -S blueman network-manager-applet udiskie
-paru -S clipit pa-applet-git dmenu2 megasync-nopdfium
+paru -S clipit pa-applet-git dmenu2 
 
 # setup sound server and bluetooth
 sudo pacman -S pulseaudio pulseaudio-bluetooth pamixer
 sudo systemctl enable bluetooth.service
 
+# install other applications
+sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso 
+paru -S brave-bin megasync-nopdfium spotify visual-studio-code-bin
+sudo pacman -S dolphin mpv htop filelight ntfs-3g libreoffice-fresh
+
 # install my own dotfiles setup
-git clone https://github.com/markustelser/dotfiles ~/Code
-cd dotfiles && sudo ./setup.sh ~
+git clone https://github.com/markustelser/dotfiles ~/Code/dotfiles
+cd ~/Code/dotfiles && sudo ./setup.sh ~
+
+# set up network printer and scanner
+sudo pacman -S cups sane sane-airscan
+sudo systemctl enable --now cups
 
 # the end
 exit && reboot
 
 # TODO fix symlink not working /etc/lightdm/slick-greeter.conf
 # TODO add maybe later https://tqdev.com/2022-luks-with-usb-unlock 
+# TODO rewrite README
+#
+# TODO install qt5ct configure settings for dolphin
+# then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment"
