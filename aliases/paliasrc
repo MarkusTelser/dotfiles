@@ -22,3 +22,6 @@ alias hdir="cd ~/Code/dotfiles"
 alias todo="nvim ~/todo.md"
 alias hdmi-school="xrandr --output HDMI-1 --scale 1.9x2 --same-as eDP-1 --auto"
 alias hdmi-off="xrandr --output HDMI-1 --off --auto"
+
+# bug-fix aliases
+alias megasync="DO_NOT_UNSET_QT_QPA_PLATFORMTHEME=1 DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE=1 megasync" # fix bug "Error unsetting QT_QPA_PLATFORMTHEME vble"
