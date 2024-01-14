@@ -7,3 +7,7 @@ if has('clipboard')
 endif
 
 command! W SudaWrite
+
+" strike-through and undo current line
+nmap <M-u> <Esc>^i~~<Esc>A~~<Esc>0
+nmap <M-U> <Esc>^2x$xx0
