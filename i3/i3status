@@ -53,7 +53,7 @@ memory {
         threshold_critical = "5%"
 }
 
-disk "/" {
+disk "/home" {
 				# format = " hdd  %percentage_free of %total"
 				format = " hdd: %free (%percentage_free)"
 				format = "   %free (%percentage_free)"
