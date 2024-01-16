@@ -1,5 +1,3 @@
-# TODO switch from xorg to wayland, 
-# TODO switch from i3 to sway
 #!/usr/bin/env bash
 
 # set the keyboard layout 
@@ -195,9 +193,29 @@ sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
 paru -S brave-bin megasync-nopdfium spotify visual-studio-code-bin
 sudo pacman -S dolphin mpv htop filelight ntfs-3g libreoffice-fresh
 
+# change GTK-theme
+ls /usr/share/themes
+sudo nvim /etc/gtk-3.0/settings.ini
+paru -S adwaita-qt5-git
+
 # install my own dotfiles setup
 git clone https://github.com/markustelser/dotfiles ~/Code/dotfiles
 cd ~/Code/dotfiles && sudo ./setup.sh ~
+
+# unlocks luks with usb (https://tqdev.com/2022-luks-with-usb-unlock)
+dd if=/dev/urandom bs=1 count=256 > <UUID>.lek # get <UUID> with `uuidgen`
+cp <UUID>.lek /PATH_WHERE_USB_IS_MOUNTED # get PATH of usb device with `lsblk`
+sudo blkid --match-token TYPE=crypto_LUKS -o device # outputs encrypted luks volume
+sudo cryptsetup luksAddKey /dev/sda3 <UUID>.lek
+rm <UUID>.lek
+# in /etc/crypttab replace the first with the second line
+# sda3_crypt UUID=b9570e0f-3bd3-40b0-801f-ee20ac460207 none luks,discard
+# sda3_crypt UUID=b9570e0f-3bd3-40b0-801f-ee20ac460207 85125e5e-7bc4-11ec-afea-67650910c179 luks,discard,keyscript=/bin/luksunlockusb
+# TODO add script luksunlockusb to repository
+chmod 755 luksunlockusb
+sudo mv luksunlockusb /bin/luksunlockusb
+
+
 
 # set up network printer and scanner
 sudo pacman -S cups sane sane-airscan
@@ -206,9 +224,10 @@ sudo systemctl enable --now cups
 # the end
 exit && reboot
 
+# TODO switch from xorg to wayland, 
+# TODO switch from i3 to sway
 # TODO fix symlink not working /etc/lightdm/slick-greeter.conf
 # TODO add maybe later https://tqdev.com/2022-luks-with-usb-unlock 
 # TODO rewrite README
-#
 # TODO install qt5ct configure settings for dolphin
 # then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment"
