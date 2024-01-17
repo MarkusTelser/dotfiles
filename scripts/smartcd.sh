@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # smartcd ...
 # - acts like the standard cd program
 # - but understands when the argument is a file-path

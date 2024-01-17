@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # olacritty = old alacritty path in new instance
 # 
 # Spawn a new instance of Alacritty using the CWD of the currently focused

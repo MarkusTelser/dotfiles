@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # notes = automated template setup
 # for quickly writing notes in nvim
