@@ -9,7 +9,7 @@ backup_files=()
 # UTILITY FUNCTIONS
 # ------------------
 
-function print(){
+function _print(){
     if [ $# == 2 ]; then case $2 in
             0) icon="\u2713"; color="\u001b[32m";; # success
             1) icon="\u0021"; color="\u001b[33m";; # warning
@@ -24,28 +24,42 @@ function print(){
     fi
 }
 
-function createSymLink(){
-    if [ -e "$2" ] && [ ! -h "$2" ]; then
+function _prepareSymLink(){
+		# make source file executable	
+		if [ "$3" == "1" ]; then
+			sudo -u root chmod +x "$1"
+		fi
+
+		# is symlink
+    if [ -h "$2" ]; then
+				_print "updating existing symlink at $2 (to $1)" 1
+        rm $2
+		# is normal file
+		elif [ -e "$2" ]; then
 				cd $CDIR && sudo -u $RUSER mkdir -p $BACKUP_DIR
 
 				# if directory exists and is not empty
         if [[ -d "$2" ]] && [[ ! -z "$(ls -A "$2")" ]]; then
-            print "removing existing directory $2" 2
+            _print "removing existing directory $2" 2
 						backup_files+=("$2")
         elif [[ -f "$2" ]]; then
-            print "removing existing file $2" 2
+            _print "removing existing file $2" 2
 		        backup_files+=("$2")
         fi
 				cp -RL $2 $BACKUP_DIR && rm -rf $2
-    fi
-
-    if [ -h "$2" ]; then
-				print "updating existing symlink at $2 (to $1)" 1
-        rm $2
 		else
-				print "creating symlink at $2 (to $1)" 0
+				_print "creating symlink at $2 (to $1)" 0
 		fi
-		sudo -u $RUSER ln -s $1 $2
+}
+
+function createUserSymLink(){
+	_prepareSymLink "$@"
+	sudo -u $RUSER ln -s $1 $2
+}
+
+function createRootSymLink(){
+	_prepareSymLink "$@"
+	sudo -u root ln -s $1 $2
 }
 
 function update_sys {
@@ -143,9 +157,9 @@ function pre_modules {
 			apt-get -y install fzf neofetch	
 		fi
 
-		createSymLink $CDIR/aliases/aliasrc $HOME/.config/aliasrc
-		createSymLink $CDIR/aliases/paliasrc $HOME/.config/paliasrc
-		createSymLink $CDIR/dircolors/dir_colors $HOME/.dircolors
+		createUserSymLink $CDIR/aliases/aliasrc $HOME/.config/aliasrc
+		createUserSymLink $CDIR/aliases/paliasrc $HOME/.config/paliasrc
+		createUserSymLink $CDIR/dircolors/dir_colors $HOME/.dircolors
 	fi
 }
 
@@ -159,8 +173,8 @@ function alacritty {
 		apt-get -y install alacritty 
 	fi
 	
-	createSymLink "$CDIR/alacritty/" "$HOME/.config/alacritty"
-	ln -sf "/usr/bin/alacritty" "/usr/bin/terminal"
+	createUserSymLink "$CDIR/alacritty/" "$HOME/.config/alacritty"
+	createRootSymLink "/usr/bin/alacritty" "/usr/bin/terminal"
 }
 
 
@@ -171,9 +185,9 @@ function bash {
 		apt-get -y install bash
 	fi
 	
-	createSymLink $CDIR/bash/bashrc $HOME/.bashrc
-	createSymLink $CDIR/bash/bash_prompt $HOME/.bash_prompt
-	createSymLink $CDIR/bash/bash_profile $HOME/.bash_profile
+	createUserSymLink $CDIR/bash/bashrc $HOME/.bashrc
+	createUserSymLink $CDIR/bash/bash_prompt $HOME/.bash_prompt
+	createUserSymLink $CDIR/bash/bash_profile $HOME/.bash_profile
 }
 
 function zsh {
@@ -190,10 +204,10 @@ function zsh {
 		sudo -u $RUSER mkdir -p $HOME/.config/zsh
 	fi
 	
-	createSymLink $CDIR/zsh/zshenv $HOME/.zshenv
-	createSymLink $CDIR/zsh/zshrc $HOME/.config/zsh/.zshrc
-	createSymLink $CDIR/zsh/zsh_prompt $HOME/.config/zsh/.zsh_prompt
-	createSymLink $CDIR/zsh/plugins $HOME/.config/zsh/.plugins
+	createUserSymLink $CDIR/zsh/zshenv $HOME/.zshenv
+	createUserSymLink $CDIR/zsh/zshrc $HOME/.config/zsh/.zshrc
+	createUserSymLink $CDIR/zsh/zsh_prompt $HOME/.config/zsh/.zsh_prompt
+	createUserSymLink $CDIR/zsh/plugins $HOME/.config/zsh/.plugins
 }
 
 function tmux {
@@ -207,7 +221,7 @@ function tmux {
 		sudo -u $RUSER mkdir -p $HOME/.config/tmux
 	fi
 	
-	createSymLink $CDIR/tmux $HOME/.config/tmux
+	createUserSymLink $CDIR/tmux $HOME/.config/tmux
 }
 
 function nvim {
@@ -218,8 +232,8 @@ function nvim {
 		add-apt-repository -y ppa:neovim-ppa/stable
 		apt-get -y update
 		apt-get -y install neovim nodejs golang clangd python3 python3-pip build-essential fd-find ripgrep
-		ln -sf $(which fdfind) ~/.local/bin/fd
-		print "WARNING: Make sure that \$HOME/.local/bin is in your \$PATH" 1
+		createRootSymLink $(which fdfind) ~/.local/bin/fd
+		# WARNING: Make sure that $HOME/.local/bin is in your $PATH
 	fi
 	sudo -u $RUSER pip3 install pyright
 
@@ -227,7 +241,7 @@ function nvim {
 	sudo -u $RUSER curl -fLo ~/.local/share/nvim/site/autoload/plug.vim \
 		--create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-	createSymLink $CDIR/nvim $HOME/.config/nvim
+	createUserSymLink $CDIR/nvim $HOME/.config/nvim
 
 	sudo -u $RUSER nvim +PlugInstall +qall
 }
@@ -247,24 +261,22 @@ function i3 {
 	sudo -u $RUSER mkdir -p $HOME/.config/i3status
 	sudo -u $RUSER mkdir -p $HOME/.config/flameshot
 
-	createSymLink $CDIR/i3/dmenurc $HOME/.dmenurc
-	createSymLink $CDIR/i3/picom.conf $HOME/.config/picom.conf
-	createSymLink $CDIR/i3/config $HOME/.config/i3/config
-	createSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
-	createSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
-	createSymLink $CDIR/i3/xinitrc $HOME/.xinitrc
+	createUserSymLink $CDIR/i3/dmenurc $HOME/.dmenurc
+	createUserSymLink $CDIR/i3/picom.conf $HOME/.config/picom.conf
+	createUserSymLink $CDIR/i3/config $HOME/.config/i3/config
+	createUserSymLink $CDIR/i3/i3status $HOME/.config/i3status/config
+	createUserSymLink $CDIR/i3/flameshot.ini $HOME/.config/flameshot/flameshot.ini
+	createUserSymLink $CDIR/i3/xinitrc $HOME/.xinitrc
 
-	ln -sf "$CDIR/i3/user-dirs.defaults" "/etc/xdg/user-dirs.defaults"
-	ln -sf "$CDIR/i3/slick-greeter.conf" "/etc/lightdm/slick-greeter.conf"
-	ln -sf "$CDIR/i3/home-local-bin.sh" "/etc/profile.d/home-local-bin.sh"
+	createRootSymLink "$CDIR/i3/user-dirs.defaults" "/etc/xdg/user-dirs.defaults"
+	createRootSymLink "$CDIR/i3/slick-greeter.conf" "/etc/lightdm/slick-greeter.conf"
+	createRootSymLink "$CDIR/i3/home-local-bin.sh" "/etc/profile.d/home-local-bin.sh"
 
-	chmod +x "$CDIR/i3/dmenu_recency"
-	ln -sf "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 
-	ln -sf "$CDIR/i3/dmenu_recency" "/bin/dmenu_recency" 
+	createRootSymLink "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 1
+	createRootSymLink "$CDIR/i3/dmenu_recency" "/bin/dmenu_recency" 1
 
-	chmod +x "$CDIR/i3/i3exit"
-	ln -sf "$CDIR/i3/i3exit" "/usr/bin/i3exit" 
-	ln -sf "$CDIR/i3/i3exit" "/bin/i3exit" 
+	createRootSymLink "$CDIR/i3/i3exit" "/usr/bin/i3exit" 1
+	createRootSymLink "$CDIR/i3/i3exit" "/bin/i3exit" 1
 		
 	# download background-wallpapers into '~/Pictures/i3-wallpapers'
 	sudo -u $RUSER mkdir -p $HOME/Pictures/i3-wallpapers
@@ -287,17 +299,19 @@ function scripts {
 	fi
 
 	if [ -x "$(command -v pacman)" ]; then
-    pacman --noconfirm -S bat xdotool gawk sed bc
+    pacman --noconfirm -S bat xdotool gawk sed bc jq
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install bat xdotool gawk sed bc
+		apt-get -y install bat xdotool gawk sed bc jq
 		# on debian or ubuntu bat useses the batcat command by default
-		createSymLink /usr/bin/batcat $HOME/.local/bin/bat
+		createUserSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
 
-	chmod +x $CDIR/scripts/*
-
-	for filename in $CDIR/scripts/*; do
-		createSymLink $filename $HOME/.local/bin/$(basename ${filename%.sh})
+	for filename in $CDIR/scripts/user/*; do
+		createUserSymLink $filename $HOME/.local/bin/$(basename ${filename%.sh}) 1
+	done
+	for filename in $CDIR/scripts/root/*; do
+		createRootSymLink $filename /usr/bin/$(basename ${filename%.sh}) 1
+		createRootSymLink $filename /bin/$(basename ${filename%.sh}) 1
 	done
 }
 
