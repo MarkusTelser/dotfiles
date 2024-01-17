@@ -7,6 +7,7 @@
 CURRENT_WORKSPACE=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name')
 NUMBER_WINDOWS=$(i3-msg -t get_tree | jq -r "recurse(.nodes[]) | select(.name == \"$CURRENT_WORKSPACE\") | recurse(.nodes[]) | select(.window) | .name" )
 # only switch to empty workspace, if current one is filled with atleast one window
+echo $NUMBER_WINDOWS
 if $NUMBER_WINDOWS ; then
 	exit 0;
 fi
