@@ -270,7 +270,8 @@ function i3 {
 
 	createRootSymLink "$CDIR/i3/user-dirs.defaults" "/etc/xdg/user-dirs.defaults"
 	createRootSymLink "$CDIR/i3/slick-greeter.conf" "/etc/lightdm/slick-greeter.conf"
-	createRootSymLink "$CDIR/i3/home-local-bin.sh" "/etc/profile.d/home-local-bin.sh"
+	createRootSymLink "$CDIR/i3/home-local-bin.sh" "/etc/profile.d/home-local-bin.sh" 1
+	createRootSymLink "$CDIR/i3/70-touchpad.conf" "/etc/X11/xorg.conf.d/70-touchpad.conf"
 
 	createRootSymLink "$CDIR/i3/dmenu_recency" "/usr/bin/dmenu_recency" 1
 	createRootSymLink "$CDIR/i3/dmenu_recency" "/bin/dmenu_recency" 1
