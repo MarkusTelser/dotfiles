@@ -307,10 +307,10 @@ function scripts {
 		createUserSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
 
-	for filename in $CDIR/scripts/user/*; do
+	for filename in $CDIR/scripts_user/*; do
 		createUserSymLink $filename $HOME/.local/bin/$(basename ${filename%.sh}) 1
 	done
-	for filename in $CDIR/scripts/root/*; do
+	for filename in $CDIR/scripts_root/*; do
 		createRootSymLink $filename /usr/bin/$(basename ${filename%.sh}) 1
 		createRootSymLink $filename /bin/$(basename ${filename%.sh}) 1
 	done
