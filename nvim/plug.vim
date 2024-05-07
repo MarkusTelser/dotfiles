@@ -33,7 +33,7 @@ call plug#begin()
 	" fuzzy file finder
 	Plug 'nvim-lua/popup.nvim'
 	Plug 'nvim-lua/plenary.nvim'
-	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+	Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 	Plug 'nvim-telescope/telescope-media-files.nvim' 
 
 	" versioning support
