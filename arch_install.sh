@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# TODO READ THROUGH, TO HAVE A FULLY SECURE SETUP
+# https://wiki.gentoo.org/wiki/Full_Disk_Encryption_From_Scratch
+
+# TODO erase exisitng data https://wiki.gentoo.org/wiki/Secure_wipe
+
 # set the keyboard layout 
 loadkeys de-latin1
 
@@ -229,4 +234,5 @@ exit && reboot
 # TODO switch from i3 to sway
 # TODO rewrite README
 # TODO install qt5ct configure settings for dolphin
+# TODO can there be even more encryption (BIOS?what else?)
 # then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment"
