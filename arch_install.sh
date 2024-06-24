@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-# TODO READ THROUGH, TO HAVE A FULLY SECURE SETUP
-# https://wiki.gentoo.org/wiki/Full_Disk_Encryption_From_Scratch
+# crypto shredding
+cryptsetup erase /dev/nvme0n1 # remove keys from old LUKS header
+wipefs --all /dev/nvme0n1 # remove the whole old LUKS header
 
-# TODO erase exisitng data https://wiki.gentoo.org/wiki/Secure_wipe
+# full erase of NVMe-drive
+nvme format --ses 1 /dev/nvme0 
 
 # set the keyboard layout 
 loadkeys de-latin1
@@ -50,7 +52,7 @@ cryptsetup luksOpen --type luks2 /dev/nvme0n1p3 luks
 # append "-C y" to set contiguous allocation policy for SWAP
 pvcreate /dev/mapper/luks
 vgcreate vg0 /dev/mappper/luks
-lvcreate --size 18G vg0 --name swap 
+lvcreate --size 16G vg0 --name swap 
 lvcreate --size 40G vg0 --name root
 lvcreate --size 200G vg0 --name home
 lvcreate -l +100%FREE vg0 --name ext
@@ -212,7 +214,7 @@ cd ~/Code/dotfiles && sudo ./setup.sh ~
 dd if=/dev/urandom bs=1 count=256 > <UUID>.lek # get <UUID> with `uuidgen`
 cp <UUID>.lek /PATH_WHERE_USB_IS_MOUNTED # get PATH of usb device with `lsblk`
 sudo blkid --match-token TYPE=crypto_LUKS -o device # outputs encrypted luks volume
-sudo cryptsetup luksAddKey /dev/sda3 <UUID>.lek
+sudo cryptsetup luksAddKey /dev/nvme0n1p3 <UUID>.lek
 rm <UUID>.lek
 # in /etc/crypttab replace the first with the second line
 # sda3_crypt UUID=b9570e0f-3bd3-40b0-801f-ee20ac460207 none luks,discard
@@ -227,12 +229,13 @@ mkinitcpio -p linux
 sudo pacman -S cups sane sane-airscan
 sudo systemctl enable --now cups
 
+# LUKS header backup
+cryptsetup luksHeaderBackup /dev/nvme0n1p1 --header-backup-file <NAME>.img
+
 # the end
 exit && reboot
 
-# TODO switch from xorg to wayland, 
-# TODO switch from i3 to sway
+# TODO switch from xorg to wayland (IN THE FUTURE)
+# TODO switch from i3 to sway (IN THE FUTURE)
 # TODO rewrite README
-# TODO install qt5ct configure settings for dolphin
-# TODO can there be even more encryption (BIOS?what else?)
-# then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment"
+# then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment" (TODO is this useful??)
