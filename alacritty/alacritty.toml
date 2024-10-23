@@ -1,4 +1,4 @@
-live_config_reload = true
+general.live_config_reload = true
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -169,7 +169,7 @@ multiplier = 4
 [selection]
 save_to_clipboard = false
 
-[shell]
+[terminal.shell]
 args = ["-c", "/usr/bin/tmux attach &> /dev/null || zsh"]
 program = "/usr/bin/zsh"
 
