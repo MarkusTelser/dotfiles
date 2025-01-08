@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
+# set the keyboard layout 
+loadkeys de-latin1
+
 # crypto shredding
 cryptsetup erase /dev/nvme0n1 # remove keys from old LUKS header
 wipefs --all /dev/nvme0n1 # remove the whole old LUKS header
 
 # full erase of NVMe-drive
 nvme format --ses 1 /dev/nvme0 
-
-# set the keyboard layout 
-loadkeys de-latin1
 
 # check if 4k-sectors are supported and used on drive
 # switch ssd to native 4k-blocks
@@ -89,7 +89,7 @@ nvim /etc/hostname
 passwd
 
 # edit the host file
-sudo tee /etc/hosts << EOF
+tee /etc/hosts << EOF
 127.0.0.1	 localhost
 ::1				 localhost
 127.0.1.1	 xyz
@@ -152,7 +152,7 @@ passwd carlos && passwd luis
 su -l carlos
 
 # setup reflector script to retrieve mirror list
-sudo pacman -S reflector
+sudo pacman -Sy reflector
 sudo tee /etc/xdg/reflector/reflector.conf << EOF
 --latest 5
 --sort rate
