@@ -49,10 +49,10 @@ cryptsetup luksFormat --type luks2 /dev/nvme0n1p3
 cryptsetup luksOpen --type luks2 /dev/nvme0n1p3 luks
 
 # create LVM partitions
-# append "-C y" to set contiguous allocation policy for SWAP
+# "-C y" sets contiguous allocation policy (useful for SWAP)
 pvcreate /dev/mapper/luks
 vgcreate vg0 /dev/mappper/luks
-lvcreate --size 16G vg0 --name swap 
+lvcreate -C y --size 16G vg0 --name swap 
 lvcreate --size 40G vg0 --name root
 lvcreate --size 200G vg0 --name home
 lvcreate -l +100%FREE vg0 --name ext
@@ -166,6 +166,10 @@ sudo systemctl enable --now reflector.service
 git clone https://aur.archlinux.org/paru.git
 cd paru && makepkg -si
 
+# install graphics driver
+# https://wiki.archlinux.org/title/xorg#Driver_installation
+sudo pacman -S mesa nvidia nvidia-utils
+
 # install X-Server, Display Manager, Greeter
 sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter dunst
 sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm xclip # needed for startx
@@ -181,11 +185,6 @@ sudo pacman -S materia-gtk-theme deepin-icon-theme
 # change gtk-theme-name to "Materia-dark-compact"
 # change gtk-font-name to "DejaVu Sans 11"
 sudo nvim /usr/share/gtk-3.0/settings.ini
-
-# install graphics driver
-# https://wiki.archlinux.org/title/xorg#Driver_installation
-# sudo pacman -S xf86-input-vmmouse xf86-video-vmware 
-sudo pacman -S mesa nvidia nvidia-utils
 
 # install tray icon application
 sudo pacman -S blueman network-manager-applet udiskie
