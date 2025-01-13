@@ -217,10 +217,6 @@ function tmux {
 		apt-get -y install tmux
 	fi
 
-	if [[ ! -d $HOME/.config/tmux ]]; then
-		sudo -u $RUSER mkdir -p $HOME/.config/tmux
-	fi
-	
 	createUserSymLink $CDIR/tmux $HOME/.config/tmux
 }
 
