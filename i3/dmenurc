@@ -3,10 +3,10 @@
 #
 
 ## define the font for dmenu to be used
-DMENU_FN="DejaVuSans-12"
+DMENU_FN="DejaVuSans-13"
 
 ## height of menu line
-DMENU_HG="28"
+# DMENU_HG="28"
 
 ## background colour for unselected menu-items
 DMENU_NB="#222D31"
@@ -25,4 +25,5 @@ DMENU_SF="#222D31"
 TERMINAL_CMD="terminal -e"
 
 ## export our variables
-DMENU_OPTIONS="-nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -fn $DMENU_FN -h $DMENU_HG -i"
+## DMENU_OPTIONS="-nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -fn $DMENU_FN -h $DMENU_HG -i"
+DMENU_OPTIONS="-nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -fn $DMENU_FN -i"
