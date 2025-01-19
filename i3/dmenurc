@@ -9,7 +9,6 @@ DMENU_FN="DejaVuSans-13"
 # DMENU_HG="28"
 
 ## background colour for unselected menu-items
-DMENU_NB="#222D31"
 DMENU_NB="#282828"
 
 ## textcolour for unselected menu-items
