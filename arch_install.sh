@@ -181,6 +181,7 @@ sudo nvim /etc/lightdm/lightdm.conf
 
 # change GTK-3.0 theme, icons and font
 sudo pacman -S materia-gtk-theme deepin-icon-theme
+paru -S adwaita-qt5-git
 # change gtk-icon-theme-name to "bloom-classic"
 # change gtk-theme-name to "Materia-dark-compact"
 # change gtk-font-name to "DejaVu Sans 11"
@@ -188,7 +189,7 @@ sudo nvim /usr/share/gtk-3.0/settings.ini
 
 # install tray icon application
 sudo pacman -S blueman network-manager-applet udiskie
-paru -S clipit pa-applet-git dmenu2 
+paru -S clipit pa-applet-git clipmenu
 
 # setup sound server and bluetooth
 sudo pacman -S pulseaudio pulseaudio-bluetooth pamixer
@@ -197,32 +198,11 @@ sudo systemctl enable bluetooth.service
 # install other applications
 sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso 
 paru -S brave-bin megasync-nopdfium spotify visual-studio-code-bin
-sudo pacman -S dolphin mpv htop filelight ntfs-3g libreoffice-fresh
-
-# change GTK-theme
-ls /usr/share/themes
-sudo nvim /etc/gtk-3.0/settings.ini
-paru -S adwaita-qt5-git
+sudo pacman -S dolphin mpv htop filelight ntfs-3g libreoffice-fresh bitwarden
 
 # install my own dotfiles setup
 git clone https://github.com/markustelser/dotfiles ~/Code/dotfiles
 cd ~/Code/dotfiles && sudo ./setup.sh ~
-
-# unlocks luks with usb (https://tqdev.com/2022-luks-with-usb-unlock)
-# TODO test this shit
-dd if=/dev/urandom bs=1 count=256 > <UUID>.lek # get <UUID> with `uuidgen`
-cp <UUID>.lek /PATH_WHERE_USB_IS_MOUNTED # get PATH of usb device with `lsblk`
-sudo blkid --match-token TYPE=crypto_LUKS -o device # outputs encrypted luks volume
-sudo cryptsetup luksAddKey /dev/nvme0n1p3 <UUID>.lek
-rm <UUID>.lek
-# in /etc/crypttab replace the first with the second line
-# sda3_crypt UUID=b9570e0f-3bd3-40b0-801f-ee20ac460207 none luks,discard
-# sda3_crypt UUID=b9570e0f-3bd3-40b0-801f-ee20ac460207 85125e5e-7bc4-11ec-afea-67650910c179 luks,discard,keyscript=/bin/luksunlockusb
-sudo nvim /etc/crypttab
-# reconfigure mkinitcpio with modules needed 
-# Add 'ext4', 'nls_cp437', 'nls_ascii', 'usb_storage' to MODULES
-sudo nvim /etc/mkinitcpio.conf
-mkinitcpio -p linux
 
 # set up network printer and scanner
 sudo pacman -S cups sane sane-airscan

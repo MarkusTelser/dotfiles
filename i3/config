@@ -37,6 +37,7 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_extended_run
+bindsym $mod+Shift+a exec --no-startup-id clipmenu -nf \#BDAE93 -nb \#282828 -sf \#222D31 -sb \#B8BB26 -fn DejaVuSans-13 -i
 
 #############################
 ###    sound-section      ###
@@ -288,6 +289,7 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 exec --no-startup-id udiskie --automount --notify --tray
 exec --no-startup-id feh --no-fehbg --bg-scale --randomize ~/Pictures/i3-wallpapers/*
 # exec --no-startup-id feh --no-fehbg --bg-scale ~/Pictures/i3-wallpapers/seiser-alm2.jpg
+exec --no-startup-id clipmenud
 
 
 # Color palette used for the terminal ( ~/.Xresources file )
