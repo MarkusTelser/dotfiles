@@ -211,10 +211,10 @@ sudo systemctl enable --now cups
 # LUKS header backup
 cryptsetup luksHeaderBackup /dev/nvme0n1p1 --header-backup-file <NAME>.img
 
+# optional installation options are in the folder: ./extras 
+
 # the end
 exit && reboot
 
-# TODO switch from xorg to wayland (IN THE FUTURE)
-# TODO switch from i3 to sway (IN THE FUTURE)
 # TODO rewrite README
 # then put "QT_QPA_PLATFORMTHEME=qt5ct" in "/etc/environment" (TODO is this useful??)
