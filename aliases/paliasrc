@@ -21,6 +21,7 @@ alias hdir="cd ~/Code/dotfiles"
 # further aliases
 alias todo="nvim ~/todo.md"
 alias hdmi-school="xrandr --output HDMI-1 --scale 1.9x2 --same-as eDP-1 --auto"
+alias hdmi-home="xrandr --output HDMI-1 --above eDP-1 --mode 2560x1440 --rate 60 --scale 1x1"
 alias hdmi-off="xrandr --output HDMI-1 --off --auto"
 
 # bug-fix aliases
