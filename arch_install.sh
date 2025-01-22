@@ -174,6 +174,8 @@ sudo pacman -S mesa nvidia nvidia-utils
 sudo pacman -S xorg xorg-apps lightdm lightdm-slick-greeter dunst
 sudo pacman -S xorg-xinit xorg-twm xorg-xclock xterm xclip # needed for startx
 sudo systemctl enable lightdm.service
+sudo groupadd -r autologin
+gpasswd -a carlos autologin
 
 # change GTK-3.0 theme, icons and font
 sudo pacman -S materia-gtk-theme deepin-icon-theme
