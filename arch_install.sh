@@ -203,7 +203,7 @@ git clone https://github.com/markustelser/dotfiles ~/Code/dotfiles
 cd ~/Code/dotfiles && sudo ./setup.sh ~
 
 # set up network printer and scanner
-sudo pacman -S cups sane sane-airscan
+sudo pacman -S cups sane sane-airscan skanlite
 sudo systemctl enable --now cups
 
 # LUKS header backup
