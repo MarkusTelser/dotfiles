@@ -300,9 +300,9 @@ function scripts {
 	fi
 
 	if [ -x "$(command -v pacman)" ]; then
-    pacman --noconfirm -S bat xdotool gawk sed bc jq
+    pacman --noconfirm -S bat xdotool gawk sed bc jq imagemagick
 	elif [ -x "$(command -v apt-get)" ]; then
-		apt-get -y install bat xdotool gawk sed bc jq
+		apt-get -y install bat xdotool gawk sed bc jq imagemagick
 		# on debian or ubuntu bat useses the batcat command by default
 		createUserSymLink /usr/bin/batcat $HOME/.local/bin/bat
 	fi
