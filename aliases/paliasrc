@@ -19,9 +19,10 @@ alias vmdir="cd /run/media/carlos/VIRTUALBOXES/"
 alias hdir="cd ~/Code/dotfiles"
 
 # further aliases
+cmd_bg="feh --bg-scale $(find ~/Pictures/i3-wallpapers -type f | shuf -n 1)"
 alias todo="nvim ~/todo.md"
 alias hdmi-school="xrandr --output HDMI-1 --scale 1.9x2 --same-as eDP-1 --auto"
-alias hdmi-home="xrandr --output HDMI-1 --above eDP-1 --mode 2560x1440 --rate 60 --scale 1x1"
+alias hdmi-home="xrandr --output HDMI-1 --above eDP-1 --mode 2560x1440 --rate 60 --scale 1x1 && ${cmd_bg}"
 alias hdmi-off="xrandr --output HDMI-1 --off --auto"
 alias hdmi-lpt-on="xrandr --output eDP-1 --auto"
 alias hdmi-lpt-off="xrandr --output eDP-1 --off"
